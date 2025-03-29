@@ -84,4 +84,19 @@
   .tag-other {
     @apply bg-festival-yellow/20 text-gray-700;
   }
+
+  /* Larger tag buttons for the filter bar */
+  .tag-filter-button {
+    @apply transition-all duration-200 font-medium text-sm px-4 py-2 rounded-full;
+  }
+}
+
+/* Add smooth scrolling for the tag filter */
+.tag-filter-container {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.tag-filter-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }

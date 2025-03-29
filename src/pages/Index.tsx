@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import EventCard from '@/components/EventCard';
 import EventModal from '@/components/EventModal';
 import EventFilters from '@/components/EventFilters';
+import TagFilter from '@/components/TagFilter';
 import { getFilteredEvents } from '@/services/eventService';
 import { getUniqueEventTags } from '@/utils/dateUtils';
 import { Event } from '@/types';
@@ -30,6 +31,11 @@ const Index = () => {
     setIsModalOpen(false);
   };
 
+  // Handle tag selection
+  const handleTagSelect = (tag: string) => {
+    setSelectedTag(tag);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
@@ -41,6 +47,16 @@ const Index = () => {
         </p>
       </div>
       
+      {/* Tag filters (horizontal scrollable) */}
+      <div className="mb-6">
+        <TagFilter 
+          tags={tags} 
+          selectedTag={selectedTag} 
+          onTagSelect={handleTagSelect} 
+        />
+      </div>
+      
+      {/* Search and date filters */}
       <EventFilters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}

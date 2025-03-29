@@ -86,27 +86,19 @@ const EventFilters: React.FC<FilterProps> = ({
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        {tags.map((tag) => (
-          <button
-            key={tag}
-            onClick={() => setSelectedTag(selectedTag === tag ? '' : tag)}
-            className={`tag ${selectedTag === tag ? `tag-${tag.toLowerCase()} opacity-100` : 'bg-secondary text-foreground/80 opacity-80'} cursor-pointer transition-all hover:opacity-100`}
-          >
-            {tag}
-          </button>
-        ))}
-
-        {isFiltersActive && (
-          <button
-            onClick={clearAllFilters}
-            className="text-sm text-destructive font-medium ml-2 flex items-center"
-          >
-            <X size={14} className="mr-1" />
-            Clear all filters
-          </button>
-        )}
-      </div>
+      {isFiltersActive && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {isFiltersActive && (
+            <button
+              onClick={clearAllFilters}
+              className="text-sm text-destructive font-medium ml-2 flex items-center"
+            >
+              <X size={14} className="mr-1" />
+              Clear all filters
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
