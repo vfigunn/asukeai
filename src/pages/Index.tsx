@@ -15,11 +15,11 @@ const Index = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Get filtered events based on current filters
+  // Get all events and filtered events
+  const allEvents = getAllEvents();
   const events = getFilteredEvents(searchTerm, selectedDate, selectedTag);
   
-  // Get unique tags from all events
-  const allEvents = getAllEvents();
+  // Get unique tags
   const tags = getUniqueEventTags(allEvents);
 
   const handleEventClick = (event: Event) => {

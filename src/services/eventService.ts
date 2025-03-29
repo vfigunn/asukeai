@@ -22,7 +22,8 @@ export const getFilteredEvents = (
   return getFutureEvents().filter(event => {
     // Filter by search term
     const matchesSearch = searchTerm
-      ? event.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ? event.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        event.description.toLowerCase().includes(searchTerm.toLowerCase())
       : true;
     
     // Filter by date
