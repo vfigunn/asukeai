@@ -3,6 +3,11 @@ import { Event } from '@/types';
 import { isPastEvent } from '@/utils/dateUtils';
 import { eventsData } from '@/data/eventsData';
 
+// Function to get all events (including past ones)
+export const getAllEvents = (): Event[] => {
+  return eventsData;
+};
+
 // Function to get all future events
 export const getFutureEvents = (): Event[] => {
   return eventsData.filter(event => !isPastEvent(event.date));

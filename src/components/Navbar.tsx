@@ -25,9 +25,6 @@ const Navbar = () => {
           <Link to="/about" className={`text-base font-medium transition-colors ${isActive('/about') ? 'text-primary' : 'text-foreground/80 hover:text-primary'}`}>
             About Us
           </Link>
-          <Button size="sm" className="bg-accent hover:bg-accent/90">
-            Submit Event
-          </Button>
         </div>
         
         {/* Mobile menu button */}
@@ -57,9 +54,6 @@ const Navbar = () => {
             >
               About Us
             </Link>
-            <Button size="sm" className="bg-accent hover:bg-accent/90 w-full">
-              Submit Event
-            </Button>
           </div>
         </div>
       )}

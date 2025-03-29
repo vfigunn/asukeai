@@ -4,7 +4,7 @@ import EventCard from '@/components/EventCard';
 import EventModal from '@/components/EventModal';
 import EventFilters from '@/components/EventFilters';
 import TagFilter from '@/components/TagFilter';
-import { getFilteredEvents } from '@/services/eventService';
+import { getAllEvents, getFilteredEvents } from '@/services/eventService';
 import { getUniqueEventTags } from '@/utils/dateUtils';
 import { Event } from '@/types';
 
@@ -19,7 +19,7 @@ const Index = () => {
   const events = getFilteredEvents(searchTerm, selectedDate, selectedTag);
   
   // Get unique tags from all events
-  const allEvents = getFilteredEvents();
+  const allEvents = getAllEvents();
   const tags = getUniqueEventTags(allEvents);
 
   const handleEventClick = (event: Event) => {

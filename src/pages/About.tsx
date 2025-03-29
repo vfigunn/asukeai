@@ -1,23 +1,8 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Facebook, Instagram, Twitter, Mail } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
 
 const About = () => {
-  const { toast } = useToast();
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    
-    toast({
-      title: "Form submitted!",
-      description: "We'll review your event and get back to you soon.",
-    });
-  };
-
   return (
     <div>
       <section className="container mx-auto px-4 py-16 md:py-24">
@@ -85,59 +70,6 @@ const About = () => {
             <p className="text-gray-600">
               We're committed to supporting event organizers and helping them reach their target audience.
             </p>
-          </div>
-        </div>
-      </section>
-      
-      <section id="contact" className="bg-primary py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
-            <div className="p-6 md:p-8 lg:p-10">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2">Submit Your Event</h2>
-              <p className="text-gray-600 mb-6">
-                Have an event you'd like to share? Fill out the form below and we'll review it for publication.
-              </p>
-              
-              <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
-                    <Input id="name" placeholder="John Doe" required />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
-                    <Input id="email" type="email" placeholder="john@example.com" required />
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label htmlFor="eventName" className="block text-sm font-medium text-gray-700 mb-1">Event Name</label>
-                    <Input id="eventName" placeholder="Summer Music Festival" required />
-                  </div>
-                  <div>
-                    <label htmlFor="eventDate" className="block text-sm font-medium text-gray-700 mb-1">Event Date</label>
-                    <Input id="eventDate" type="date" required />
-                  </div>
-                </div>
-                
-                <div className="mb-4">
-                  <label htmlFor="eventAddress" className="block text-sm font-medium text-gray-700 mb-1">Event Address</label>
-                  <Input id="eventAddress" placeholder="123 Main St, City, State" required />
-                </div>
-                
-                <div className="mb-4">
-                  <label htmlFor="eventDescription" className="block text-sm font-medium text-gray-700 mb-1">Event Description</label>
-                  <Textarea id="eventDescription" placeholder="Tell us about your event..." rows={4} required />
-                </div>
-                
-                <div className="flex justify-end">
-                  <Button type="submit" className="bg-accent hover:bg-accent/90">
-                    Submit Event
-                  </Button>
-                </div>
-              </form>
-            </div>
           </div>
         </div>
       </section>

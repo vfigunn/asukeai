@@ -62,27 +62,27 @@
   }
   
   .tag-music {
-    @apply bg-festival-purple/20 text-festival-purple;
+    @apply bg-purple-100 text-purple-700;
   }
   
   .tag-art {
-    @apply bg-festival-blue/20 text-festival-blue;
+    @apply bg-blue-100 text-blue-700;
   }
   
   .tag-food {
-    @apply bg-festival-orange/20 text-festival-orange;
+    @apply bg-orange-100 text-orange-700;
   }
   
   .tag-workshop {
-    @apply bg-festival-teal/20 text-festival-teal;
+    @apply bg-teal-100 text-teal-700;
   }
   
   .tag-party {
-    @apply bg-festival-pink/20 text-festival-pink;
+    @apply bg-pink-100 text-pink-700;
   }
   
   .tag-other {
-    @apply bg-festival-yellow/20 text-gray-700;
+    @apply bg-yellow-100 text-gray-700;
   }
 
   /* Larger tag buttons for the filter bar */

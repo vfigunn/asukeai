@@ -31,7 +31,7 @@ const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect })
             className={cn(
               "px-4 py-2 rounded-full text-sm font-medium transition-all",
               selectedTag === tag 
-                ? `tag-${tag.toLowerCase()} shadow-md` 
+                ? `bg-primary text-white shadow-md` 
                 : "bg-secondary hover:bg-secondary/80 text-foreground/80"
             )}
           >
