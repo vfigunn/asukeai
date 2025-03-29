@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 interface TagFilterProps {
   tags: string[];
@@ -10,15 +11,15 @@ interface TagFilterProps {
 
 const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect }) => {
   return (
-    <div className="w-full overflow-x-auto pb-2">
-      <div className="flex space-x-2 min-w-max">
+    <div className="w-full overflow-x-auto tag-filter-container pb-4">
+      <div className="flex space-x-3 min-w-max">
         <button
           onClick={() => onTagSelect('')}
           className={cn(
             "px-4 py-2 rounded-full text-sm font-medium transition-all",
             !selectedTag 
-              ? "bg-primary text-white shadow-md" 
-              : "bg-secondary hover:bg-secondary/80 text-foreground/80"
+              ? "bg-primary text-primary-foreground shadow-md" 
+              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
           )}
         >
           All Events
@@ -31,8 +32,8 @@ const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect })
             className={cn(
               "px-4 py-2 rounded-full text-sm font-medium transition-all",
               selectedTag === tag 
-                ? `bg-primary text-white shadow-md` 
-                : "bg-secondary hover:bg-secondary/80 text-foreground/80"
+                ? "bg-primary text-primary-foreground shadow-md" 
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
             )}
           >
             {tag}

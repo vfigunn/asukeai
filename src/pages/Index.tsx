@@ -1,10 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EventCard from '@/components/EventCard';
 import EventModal from '@/components/EventModal';
 import EventFilters from '@/components/EventFilters';
 import TagFilter from '@/components/TagFilter';
-import { getAllEvents, getFilteredEvents } from '@/services/eventService';
+import { getAllEvents, getFilteredEvents, getEventsByTag } from '@/services/eventService';
 import { getUniqueEventTags } from '@/utils/dateUtils';
 import { Event } from '@/types';
 
@@ -14,13 +14,16 @@ const Index = () => {
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [events, setEvents] = useState<Event[]>([]);
 
-  // Get all events and filtered events
+  // Get all events and tags
   const allEvents = getAllEvents();
-  const events = getFilteredEvents(searchTerm, selectedDate, selectedTag);
-  
-  // Get unique tags
   const tags = getUniqueEventTags(allEvents);
+
+  // Update filtered events when filters change
+  useEffect(() => {
+    setEvents(getFilteredEvents(searchTerm, selectedDate, selectedTag));
+  }, [searchTerm, selectedDate, selectedTag]);
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);
@@ -68,7 +71,7 @@ const Index = () => {
       />
       
       {events.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
           {events.map((event) => (
             <EventCard 
               key={event.id} 
@@ -78,7 +81,7 @@ const Index = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 bg-muted rounded-lg">
+        <div className="text-center py-12 bg-muted rounded-lg mt-8">
           <h3 className="text-xl font-semibold mb-2">No events found</h3>
           <p className="text-gray-600">
             Try adjusting your search filters to find events.

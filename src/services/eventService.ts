@@ -13,29 +13,39 @@ export const getFutureEvents = (): Event[] => {
   return eventsData.filter(event => !isPastEvent(event.date));
 };
 
+// Function to get events by tag
+export const getEventsByTag = (tag: string): Event[] => {
+  if (!tag) return getFutureEvents();
+  return getFutureEvents().filter(event => event.tag === tag);
+};
+
 // Function to get events by filters
 export const getFilteredEvents = (
   searchTerm: string = '',
   date: Date | undefined = undefined,
   tag: string = ''
 ): Event[] => {
-  return getFutureEvents().filter(event => {
-    // Filter by search term
-    const matchesSearch = searchTerm
-      ? event.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        event.description.toLowerCase().includes(searchTerm.toLowerCase())
-      : true;
-    
-    // Filter by date
-    const matchesDate = date
-      ? new Date(event.date).toDateString() === date.toDateString()
-      : true;
-    
-    // Filter by tag
-    const matchesTag = tag
-      ? event.tag === tag
-      : true;
-    
-    return matchesSearch && matchesDate && matchesTag;
-  });
+  let filteredEvents = getFutureEvents();
+  
+  // Filter by tag
+  if (tag) {
+    filteredEvents = filteredEvents.filter(event => event.tag === tag);
+  }
+  
+  // Filter by search term
+  if (searchTerm) {
+    filteredEvents = filteredEvents.filter(event => 
+      event.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      event.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+  
+  // Filter by date
+  if (date) {
+    filteredEvents = filteredEvents.filter(event => 
+      new Date(event.date).toDateString() === date.toDateString()
+    );
+  }
+  
+  return filteredEvents;
 };
