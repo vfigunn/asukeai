@@ -131,8 +131,16 @@ export const createEvent = async (event: {
   return data;
 };
 
-// Function to update an event
-export const updateEvent = async (id: string, event: Partial<Event>): Promise<Event | null> => {
+// Function to update an event - updated to match createEvent parameter type
+export const updateEvent = async (id: string, event: Partial<{
+  name: string;
+  date: string;
+  address: string;
+  description: string;
+  price: number;
+  image: string;
+  tag: string;
+}>): Promise<Event | null> => {
   const { data, error } = await supabase
     .from('events')
     .update(event)

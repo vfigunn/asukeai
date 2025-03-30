@@ -90,7 +90,7 @@ const EventForm: React.FC<EventFormProps> = ({ event, mode, onClose }) => {
 
   // Update event mutation
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<Event> }) => updateEvent(id, data),
+    mutationFn: ({ id, data }: { id: string; data: Partial<EventFormValues> }) => updateEvent(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
       toast({
