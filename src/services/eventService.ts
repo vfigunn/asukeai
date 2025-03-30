@@ -107,8 +107,16 @@ export const getUniqueEventTags = async (): Promise<string[]> => {
   return [...new Set(tags)];
 };
 
-// Function to create an event
-export const createEvent = async (event: Omit<Event, 'id'>): Promise<Event | null> => {
+// Function to create an event - updated to ensure required fields
+export const createEvent = async (event: {
+  name: string;
+  date: string;
+  address: string;
+  description: string;
+  price: number;
+  image: string;
+  tag: string;
+}): Promise<Event | null> => {
   const { data, error } = await supabase
     .from('events')
     .insert([event])

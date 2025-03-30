@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<void> => {
     setIsLoading(true);
     
     try {
@@ -113,8 +113,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         title: "Signed in successfully",
         description: "Welcome back!",
       });
-      
-      return data;
     } catch (error: any) {
       toast({
         title: "Login failed",
@@ -127,7 +125,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signup = async (email: string, password: string, name: string) => {
+  const signup = async (email: string, password: string, name: string): Promise<void> => {
     setIsLoading(true);
     
     try {
@@ -147,8 +145,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         title: "Account created",
         description: "Your account has been created successfully",
       });
-      
-      return data;
     } catch (error: any) {
       toast({
         title: "Signup failed",
