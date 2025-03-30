@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,7 +19,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-// Define form schema
 const eventSchema = z.object({
   name: z.string().min(3, { message: 'Name must be at least 3 characters' }),
   date: z.string().min(1, { message: 'Date is required' }),
@@ -42,13 +40,11 @@ interface EventFormProps {
 const EventForm: React.FC<EventFormProps> = ({ event, mode, onClose }) => {
   const queryClient = useQueryClient();
 
-  // Convert date to format compatible with datetime-local input
   const formatDateForInput = (dateString: string): string => {
     const date = new Date(dateString);
     return date.toISOString().slice(0, 16);
   };
 
-  // Initialize form
   const form = useForm<EventFormValues>({
     resolver: zodResolver(eventSchema),
     defaultValues: event
@@ -68,7 +64,6 @@ const EventForm: React.FC<EventFormProps> = ({ event, mode, onClose }) => {
         },
   });
 
-  // Create event mutation
   const createMutation = useMutation({
     mutationFn: createEvent,
     onSuccess: () => {
@@ -88,9 +83,16 @@ const EventForm: React.FC<EventFormProps> = ({ event, mode, onClose }) => {
     },
   });
 
-  // Update event mutation
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<EventFormValues> }) => updateEvent(id, data),
+    mutationFn: ({ id, data }: { id: string; data: Partial<{
+      name: string;
+      date: string;
+      address: string;
+      description: string;
+      price: number;
+      image: string;
+      tag: string;
+    }> }) => updateEvent(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
       toast({
@@ -110,7 +112,6 @@ const EventForm: React.FC<EventFormProps> = ({ event, mode, onClose }) => {
 
   const isSubmitting = createMutation.isPending || updateMutation.isPending;
 
-  // Submit handler
   const onSubmit = (data: EventFormValues) => {
     if (mode === 'create') {
       createMutation.mutate(data);

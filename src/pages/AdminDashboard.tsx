@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Event } from '@/types';
-import { Edit, Trash2, Plus, LogOut, Loader2 } from 'lucide-react';
+import { Edit, Trash2, Plus, LogOut, Loader2, Users } from 'lucide-react';
 import { toast } from "@/hooks/use-toast";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getAllEvents, deleteEvent } from '@/services/eventService';
@@ -28,13 +27,11 @@ const AdminDashboard = () => {
   
   const queryClient = useQueryClient();
   
-  // Fetch events
   const { data: events = [], isLoading, error } = useQuery({
     queryKey: ['admin-events'],
     queryFn: getAllEvents,
   });
 
-  // Delete event mutation
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteEvent(id),
     onSuccess: () => {
@@ -54,7 +51,6 @@ const AdminDashboard = () => {
     }
   });
   
-  // Protect the route
   useEffect(() => {
     if (!authLoading && !isAdmin) {
       navigate('/admin');
@@ -114,10 +110,16 @@ const AdminDashboard = () => {
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
           <p className="text-gray-600">Welcome back, {user?.email}</p>
         </div>
-        <Button variant="outline" onClick={handleLogout}>
-          <LogOut className="mr-2 h-4 w-4" />
-          Logout
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => navigate('/admin/users')}>
+            <Users className="mr-2 h-4 w-4" />
+            Manage Users
+          </Button>
+          <Button variant="outline" onClick={handleLogout}>
+            <LogOut className="mr-2 h-4 w-4" />
+            Logout
+          </Button>
+        </div>
       </div>
       
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -200,7 +202,6 @@ const AdminDashboard = () => {
         )}
       </div>
       
-      {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -231,7 +232,6 @@ const AdminDashboard = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Event Form Dialog */}
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
