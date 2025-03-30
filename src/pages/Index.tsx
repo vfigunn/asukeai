@@ -4,9 +4,10 @@ import EventCard from '@/components/EventCard';
 import EventModal from '@/components/EventModal';
 import EventFilters from '@/components/EventFilters';
 import TagFilter from '@/components/TagFilter';
-import { getAllEvents, getFilteredEvents, getEventsByTag } from '@/services/eventService';
+import { getAllEvents, getFilteredEvents } from '@/services/eventService';
 import { getUniqueEventTags } from '@/utils/dateUtils';
 import { Event } from '@/types';
+import { toast } from "@/components/ui/use-toast";
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,8 +23,25 @@ const Index = () => {
 
   // Update filtered events when filters change
   useEffect(() => {
-    setEvents(getFilteredEvents(searchTerm, selectedDate, selectedTag));
+    const filtered = getFilteredEvents(searchTerm, selectedDate, selectedTag);
+    console.log('Filtered events:', filtered);
+    setEvents(filtered);
   }, [searchTerm, selectedDate, selectedTag]);
+
+  // Debug on mount to check if we're getting events
+  useEffect(() => {
+    console.log('All events:', allEvents);
+    console.log('Initial events set:', getFilteredEvents('', undefined, ''));
+    
+    // Show a toast if there are no events
+    if (allEvents.length === 0) {
+      toast({
+        title: "No events found",
+        description: "Please check the events data.",
+        variant: "destructive"
+      });
+    }
+  }, []);
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);

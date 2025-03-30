@@ -12,6 +12,13 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
+  if (!event) {
+    console.error("EventCard received undefined or null event");
+    return null;
+  }
+
+  console.log("Rendering EventCard for:", event.name);
+
   return (
     <Card className="event-card cursor-pointer overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1" onClick={onClick}>
       <div className="aspect-[16/9] overflow-hidden relative">
@@ -19,6 +26,10 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
           src={event.image} 
           alt={event.name} 
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          onError={(e) => {
+            e.currentTarget.src = "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop";
+            console.error("Failed to load image for event:", event.name);
+          }}
         />
         <div className="absolute top-3 right-3">
           <Badge className={`tag tag-${event.tag.toLowerCase()}`}>{event.tag}</Badge>

@@ -34,9 +34,10 @@ export const getFilteredEvents = (
   
   // Filter by search term
   if (searchTerm) {
+    const searchLower = searchTerm.toLowerCase();
     filteredEvents = filteredEvents.filter(event => 
-      event.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      event.description.toLowerCase().includes(searchTerm.toLowerCase())
+      event.name.toLowerCase().includes(searchLower) || 
+      event.description.toLowerCase().includes(searchLower)
     );
   }
   

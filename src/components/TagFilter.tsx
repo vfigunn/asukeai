@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
 
 interface TagFilterProps {
   tags: string[];
@@ -10,6 +9,10 @@ interface TagFilterProps {
 }
 
 const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect }) => {
+  if (!tags || tags.length === 0) {
+    return null; // Don't render if there are no tags
+  }
+
   return (
     <div className="w-full overflow-x-auto tag-filter-container pb-4">
       <div className="flex space-x-3 min-w-max">
