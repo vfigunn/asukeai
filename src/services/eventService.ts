@@ -10,7 +10,10 @@ export const getAllEvents = (): Event[] => {
 
 // Function to get all future events
 export const getFutureEvents = (): Event[] => {
-  return eventsData.filter(event => !isPastEvent(event.date));
+  // For debugging purposes, return all events for now
+  return eventsData;
+  // Uncomment when date filtering is needed
+  // return eventsData.filter(event => !isPastEvent(event.date));
 };
 
 // Function to get events by tag

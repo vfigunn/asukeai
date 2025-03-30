@@ -21,19 +21,24 @@ const Index = () => {
   const allEvents = getAllEvents();
   const tags = getUniqueEventTags(allEvents);
 
+  // Load initial events on component mount
+  useEffect(() => {
+    const initialEvents = getFilteredEvents();
+    console.log('Initial events on mount:', initialEvents);
+    setEvents(initialEvents);
+  }, []);
+
   // Update filtered events when filters change
   useEffect(() => {
     const filtered = getFilteredEvents(searchTerm, selectedDate, selectedTag);
-    console.log('Filtered events:', filtered);
+    console.log('Filtered events after filter change:', filtered);
     setEvents(filtered);
   }, [searchTerm, selectedDate, selectedTag]);
 
-  // Debug on mount to check if we're getting events
+  // Debug on mount
   useEffect(() => {
-    console.log('All events:', allEvents);
-    console.log('Initial events set:', getFilteredEvents('', undefined, ''));
+    console.log('All events from data source:', allEvents);
     
-    // Show a toast if there are no events
     if (allEvents.length === 0) {
       toast({
         title: "No events found",
@@ -41,7 +46,7 @@ const Index = () => {
         variant: "destructive"
       });
     }
-  }, []);
+  }, [allEvents]);
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);
