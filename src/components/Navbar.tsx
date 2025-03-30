@@ -1,12 +1,14 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, isAdmin } = useAuth();
   
   const isActive = (path: string) => location.pathname === path;
 
@@ -24,6 +26,19 @@ const Navbar = () => {
           </Link>
           <Link to="/about" className={`text-base font-medium transition-colors ${isActive('/about') ? 'text-primary' : 'text-foreground/80 hover:text-primary'}`}>
             About Us
+          </Link>
+          
+          {/* Admin link - always visible but takes to different places based on auth state */}
+          <Link 
+            to={isAuthenticated && isAdmin ? "/admin/dashboard" : "/admin"} 
+            className={`text-base font-medium transition-colors ${
+              isActive('/admin') || isActive('/admin/dashboard') ? 'text-primary' : 'text-foreground/80 hover:text-primary'
+            }`}
+          >
+            <div className="flex items-center">
+              <User size={16} className="mr-1" />
+              Admin
+            </div>
           </Link>
         </div>
         
@@ -53,6 +68,16 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               About Us
+            </Link>
+            <Link 
+              to={isAuthenticated && isAdmin ? "/admin/dashboard" : "/admin"}
+              className={`text-base font-medium py-2 flex items-center ${
+                isActive('/admin') || isActive('/admin/dashboard') ? 'text-primary' : 'text-foreground/80'
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <User size={16} className="mr-1" />
+              Admin
             </Link>
           </div>
         </div>

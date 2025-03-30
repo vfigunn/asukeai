@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Facebook, Instagram, Twitter, Mail } from 'lucide-react';
+import ContactForm from '@/components/ContactForm';
 
 const About = () => {
   return (
@@ -70,6 +71,80 @@ const About = () => {
             <p className="text-gray-600">
               We're committed to supporting event organizers and helping them reach their target audience.
             </p>
+          </div>
+        </div>
+      </section>
+      
+      <section className="container mx-auto px-4 py-16 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Contact Us</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Have questions or feedback? Want to submit an event? Get in touch with our team.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <ContactForm />
+            
+            <div className="bg-white p-8 rounded-lg shadow-md">
+              <h3 className="text-2xl font-bold mb-6">Connect With Us</h3>
+              <p className="text-gray-600 mb-8">
+                Follow us on social media for the latest updates on upcoming events and exclusive content.
+              </p>
+              
+              <div className="space-y-6">
+                <a 
+                  href="https://facebook.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <Facebook size={24} className="text-[#1877F2] mr-4" />
+                  <div>
+                    <h4 className="font-bold">Facebook</h4>
+                    <p className="text-sm text-gray-500">@festivibe</p>
+                  </div>
+                </a>
+                
+                <a 
+                  href="https://instagram.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <Instagram size={24} className="text-[#E1306C] mr-4" />
+                  <div>
+                    <h4 className="font-bold">Instagram</h4>
+                    <p className="text-sm text-gray-500">@festivibe</p>
+                  </div>
+                </a>
+                
+                <a 
+                  href="https://twitter.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <Twitter size={24} className="text-[#1DA1F2] mr-4" />
+                  <div>
+                    <h4 className="font-bold">Twitter</h4>
+                    <p className="text-sm text-gray-500">@festivibe</p>
+                  </div>
+                </a>
+                
+                <a 
+                  href="mailto:info@festivibe.com"
+                  className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <Mail size={24} className="text-gray-700 mr-4" />
+                  <div>
+                    <h4 className="font-bold">Email</h4>
+                    <p className="text-sm text-gray-500">info@festivibe.com</p>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
