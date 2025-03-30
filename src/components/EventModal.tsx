@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { CalendarDays, Clock, MapPin, X } from 'lucide-react';
 import { formatDate, formatTime } from '@/utils/dateUtils';
 import { Event } from '@/types';
-import { Button } from '@/components/ui/button';
 
 interface EventModalProps {
   event: Event | null;
@@ -46,7 +45,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
                 <span>{event.address}</span>
               </div>
               <p className="text-lg font-bold text-primary">
-                {event.price === 0 ? 'Free' : `$${event.price}`}
+                {event.price === 0 ? 'Free' : `$${typeof event.price === 'number' ? event.price.toFixed(2) : event.price}`}
               </p>
             </DialogDescription>
           </DialogHeader>
@@ -72,10 +71,6 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-2">About Event</h3>
             <p className="text-gray-700">{event.description}</p>
-          </div>
-          
-          <div className="flex justify-end">
-            <Button className="bg-accent hover:bg-accent/90">Get Tickets</Button>
           </div>
         </div>
       </DialogContent>

@@ -1,76 +1,194 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User } from '@/types';
+import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+
+interface Profile {
+  id: string;
+  email: string;
+  name: string | null;
+  is_admin: boolean;
+}
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  profile: Profile | null;
+  session: Session | null;
   isAdmin: boolean;
   isAuthenticated: boolean;
   isLoading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string, name: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock admin user for demo purposes
-// In a real app, this would come from your database
-const ADMIN_USER: User = {
-  id: '1',
-  email: 'admin@festivibe.com',
-  name: 'Admin User',
-  isAdmin: true
-};
-
-// Mock credentials - in a real app this would be validated against a database
-const ADMIN_EMAIL = 'admin@festivibe.com';
-const ADMIN_PASSWORD = 'admin123';
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
 
-  // Check for existing session on mount
-  useEffect(() => {
-    const storedUser = localStorage.getItem('festivibe_user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+  // Fetch profile data for a user
+  const fetchProfile = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return null;
+      }
+
+      return data as Profile;
+    } catch (error) {
+      console.error('Error in fetchProfile:', error);
+      return null;
     }
-    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    // Set up auth state change listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, currentSession) => {
+        setSession(currentSession);
+        setUser(currentSession?.user ?? null);
+
+        if (currentSession?.user) {
+          const profileData = await fetchProfile(currentSession.user.id);
+          setProfile(profileData);
+        } else {
+          setProfile(null);
+        }
+
+        setIsLoading(false);
+      }
+    );
+
+    // Check for existing session
+    const initializeAuth = async () => {
+      try {
+        const { data: { session: currentSession } } = await supabase.auth.getSession();
+        setSession(currentSession);
+        setUser(currentSession?.user ?? null);
+
+        if (currentSession?.user) {
+          const profileData = await fetchProfile(currentSession.user.id);
+          setProfile(profileData);
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeAuth();
+
+    // Cleanup subscription
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     
-    // Simulate API call/delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Simple validation for demo purposes
-    // In a real app, this would be a proper API call to your backend
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      setUser(ADMIN_USER);
-      localStorage.setItem('festivibe_user', JSON.stringify(ADMIN_USER));
-    } else {
-      throw new Error('Invalid credentials');
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      // Success notification
+      toast({
+        title: "Signed in successfully",
+        description: "Welcome back!",
+      });
+      
+      return data;
+    } catch (error: any) {
+      toast({
+        title: "Login failed",
+        description: error.message || "Invalid email or password",
+        variant: "destructive",
+      });
+      throw error;
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('festivibe_user');
+  const signup = async (email: string, password: string, name: string) => {
+    setIsLoading(true);
+    
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name,
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Account created",
+        description: "Your account has been created successfully",
+      });
+      
+      return data;
+    } catch (error: any) {
+      toast({
+        title: "Signup failed",
+        description: error.message || "Failed to create account",
+        variant: "destructive",
+      });
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Signed out",
+        description: "You have been signed out successfully",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Sign out failed",
+        description: error.message || "Failed to sign out",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
     <AuthContext.Provider 
       value={{ 
-        user, 
-        login, 
-        logout, 
-        isAdmin: user?.isAdmin || false,
+        user,
+        profile,
+        session,
+        isAdmin: profile?.is_admin || false,
         isAuthenticated: !!user,
-        isLoading 
+        isLoading,
+        login,
+        signup,
+        logout
       }}
     >
       {children}

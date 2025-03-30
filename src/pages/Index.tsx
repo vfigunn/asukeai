@@ -1,13 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import EventCard from '@/components/EventCard';
 import EventModal from '@/components/EventModal';
 import EventFilters from '@/components/EventFilters';
 import TagFilter from '@/components/TagFilter';
-import { getAllEvents, getFilteredEvents } from '@/services/eventService';
-import { getUniqueEventTags } from '@/utils/dateUtils';
+import { getFilteredEvents, getUniqueEventTags } from '@/services/eventService';
 import { Event } from '@/types';
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
+import { Loader2 } from 'lucide-react';
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,38 +16,37 @@ const Index = () => {
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [events, setEvents] = useState<Event[]>([]);
 
-  // Get all events and tags
-  const allEvents = getAllEvents();
-  const tags = getUniqueEventTags(allEvents);
+  // Query for tags
+  const tagsQuery = useQuery({
+    queryKey: ['event-tags'],
+    queryFn: getUniqueEventTags,
+  });
 
-  // Load initial events on component mount
+  // Query for events with filters
+  const eventsQuery = useQuery({
+    queryKey: ['events', searchTerm, selectedDate, selectedTag],
+    queryFn: () => getFilteredEvents(searchTerm, selectedDate, selectedTag),
+  });
+
+  // Show error if events or tags query fails
   useEffect(() => {
-    const initialEvents = getFilteredEvents();
-    console.log('Initial events on mount:', initialEvents);
-    setEvents(initialEvents);
-  }, []);
-
-  // Update filtered events when filters change
-  useEffect(() => {
-    const filtered = getFilteredEvents(searchTerm, selectedDate, selectedTag);
-    console.log('Filtered events after filter change:', filtered);
-    setEvents(filtered);
-  }, [searchTerm, selectedDate, selectedTag]);
-
-  // Debug on mount
-  useEffect(() => {
-    console.log('All events from data source:', allEvents);
-    
-    if (allEvents.length === 0) {
+    if (eventsQuery.error) {
       toast({
-        title: "No events found",
-        description: "Please check the events data.",
+        title: "Error loading events",
+        description: "Failed to load events. Please try again later.",
         variant: "destructive"
       });
     }
-  }, [allEvents]);
+
+    if (tagsQuery.error) {
+      toast({
+        title: "Error loading categories",
+        description: "Failed to load event categories. Please try again later.",
+        variant: "destructive"
+      });
+    }
+  }, [eventsQuery.error, tagsQuery.error]);
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);
@@ -62,6 +62,10 @@ const Index = () => {
     setSelectedTag(tag);
   };
 
+  const isLoading = eventsQuery.isLoading || tagsQuery.isLoading;
+  const events = eventsQuery.data || [];
+  const tags = tagsQuery.data || [];
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
@@ -75,11 +79,17 @@ const Index = () => {
       
       {/* Tag filters (horizontal scrollable) */}
       <div className="mb-6">
-        <TagFilter 
-          tags={tags} 
-          selectedTag={selectedTag} 
-          onTagSelect={handleTagSelect} 
-        />
+        {tagsQuery.isLoading ? (
+          <div className="flex justify-center py-4">
+            <Loader2 className="h-6 w-6 animate-spin text-primary" />
+          </div>
+        ) : (
+          <TagFilter 
+            tags={tags} 
+            selectedTag={selectedTag} 
+            onTagSelect={handleTagSelect} 
+          />
+        )}
       </div>
       
       {/* Search and date filters */}
@@ -93,7 +103,11 @@ const Index = () => {
         tags={tags}
       />
       
-      {events.length > 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center py-16">
+          <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        </div>
+      ) : events.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
           {events.map((event) => (
             <EventCard 

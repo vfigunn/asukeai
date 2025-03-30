@@ -8,6 +8,8 @@ export interface Event {
   price: number;
   image: string;
   tag: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface User {

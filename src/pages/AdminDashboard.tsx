@@ -1,11 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { getAllEvents } from '@/services/eventService';
 import { Event } from '@/types';
 import { Edit, Trash2, Plus, LogOut, Loader2 } from 'lucide-react';
 import { toast } from "@/hooks/use-toast";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getAllEvents, deleteEvent } from '@/services/eventService';
 import {
   Dialog,
   DialogContent,
@@ -15,17 +16,47 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from '@/components/ui/button';
+import EventForm from '@/components/EventForm';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const { user, isAdmin, logout, isLoading } = useAuth();
-  const [events, setEvents] = useState<Event[]>(getAllEvents());
+  const { user, isAdmin, logout, isLoading: authLoading } = useAuth();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [formMode, setFormMode] = useState<'create' | 'edit'>('create');
+  
+  const queryClient = useQueryClient();
+  
+  // Fetch events
+  const { data: events = [], isLoading, error } = useQuery({
+    queryKey: ['admin-events'],
+    queryFn: getAllEvents,
+  });
+
+  // Delete event mutation
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteEvent(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-events'] });
+      toast({
+        title: "Event deleted",
+        description: selectedEvent ? `"${selectedEvent.name}" has been deleted successfully` : "Event deleted successfully",
+      });
+      setDeleteDialogOpen(false);
+    },
+    onError: (error) => {
+      toast({
+        title: "Delete failed",
+        description: error instanceof Error ? error.message : "Failed to delete event",
+        variant: "destructive",
+      });
+    }
+  });
   
   // Protect the route
-  React.useEffect(() => {
-    if (!isLoading && !isAdmin) {
+  useEffect(() => {
+    if (!authLoading && !isAdmin) {
       navigate('/admin');
       toast({
         title: "Access denied",
@@ -33,15 +64,11 @@ const AdminDashboard = () => {
         variant: "destructive",
       });
     }
-  }, [isAdmin, isLoading, navigate]);
+  }, [isAdmin, authLoading, navigate]);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/admin');
-    toast({
-      title: "Logged out",
-      description: "You have been logged out successfully",
-    });
   };
 
   const handleDeleteClick = (event: Event) => {
@@ -51,34 +78,28 @@ const AdminDashboard = () => {
 
   const confirmDelete = () => {
     if (selectedEvent) {
-      // In a real app, this would be an API call
-      // For now we'll just update our local state
-      setEvents(events.filter(e => e.id !== selectedEvent.id));
-      toast({
-        title: "Event deleted",
-        description: `"${selectedEvent.name}" has been deleted successfully`,
-      });
+      deleteMutation.mutate(selectedEvent.id);
     }
-    setDeleteDialogOpen(false);
   };
 
-  const handleEditEvent = (eventId: string) => {
-    // In a real app, this would navigate to an edit form
-    toast({
-      title: "Edit event",
-      description: "This would navigate to an edit form in a complete application",
-    });
+  const handleEditEvent = (event: Event) => {
+    setSelectedEvent(event);
+    setFormMode('edit');
+    setIsFormOpen(true);
   };
 
   const handleAddEvent = () => {
-    // In a real app, this would navigate to an add form
-    toast({
-      title: "Add event",
-      description: "This would navigate to an add form in a complete application",
-    });
+    setSelectedEvent(null);
+    setFormMode('create');
+    setIsFormOpen(true);
   };
 
-  if (isLoading) {
+  const handleFormClose = () => {
+    setIsFormOpen(false);
+    setSelectedEvent(null);
+  };
+
+  if (authLoading) {
     return (
       <div className="flex items-center justify-center min-h-[70vh]">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -91,7 +112,7 @@ const AdminDashboard = () => {
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-gray-600">Welcome back, {user?.name}</p>
+          <p className="text-gray-600">Welcome back, {user?.email}</p>
         </div>
         <Button variant="outline" onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
@@ -108,67 +129,78 @@ const AdminDashboard = () => {
           </Button>
         </div>
         
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-muted">
-              <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium">Event</th>
-                <th className="px-6 py-3 text-left text-sm font-medium">Date</th>
-                <th className="px-6 py-3 text-left text-sm font-medium">Tag</th>
-                <th className="px-6 py-3 text-left text-sm font-medium">Price</th>
-                <th className="px-6 py-3 text-right text-sm font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {events.map((event) => (
-                <tr key={event.id} className="hover:bg-muted/50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <img 
-                        src={event.image} 
-                        alt={event.name} 
-                        className="h-10 w-10 rounded-md object-cover mr-3" 
-                      />
-                      <div className="truncate max-w-[200px]">
-                        <div className="font-medium">{event.name}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {new Date(event.date).toLocaleDateString()}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                      {event.tag}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    ${event.price.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => handleEditEvent(event.id)}
-                      className="mr-2"
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => handleDeleteClick(event)}
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
-                  </td>
+        {isLoading ? (
+          <div className="flex items-center justify-center p-12">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : error ? (
+          <div className="p-6 text-center text-red-500">
+            Error loading events. Please try again later.
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-muted">
+                <tr>
+                  <th className="px-6 py-3 text-left text-sm font-medium">Event</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium">Date</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium">Tag</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium">Price</th>
+                  <th className="px-6 py-3 text-right text-sm font-medium">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {events.map((event) => (
+                  <tr key={event.id} className="hover:bg-muted/50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <img 
+                          src={event.image} 
+                          alt={event.name} 
+                          className="h-10 w-10 rounded-md object-cover mr-3" 
+                        />
+                        <div className="truncate max-w-[200px]">
+                          <div className="font-medium">{event.name}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {new Date(event.date).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                        {event.tag}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      ${typeof event.price === 'number' ? event.price.toFixed(2) : event.price}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleEditEvent(event)}
+                        className="mr-2"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleDeleteClick(event)}
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
       
+      {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -178,13 +210,38 @@ const AdminDashboard = () => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+            <Button variant="outline" onClick={() => setDeleteDialogOpen(false)} disabled={deleteMutation.isPending}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmDelete}>
-              Delete
+            <Button 
+              variant="destructive" 
+              onClick={confirmDelete}
+              disabled={deleteMutation.isPending}
+            >
+              {deleteMutation.isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                'Delete'
+              )}
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Event Form Dialog */}
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>{formMode === 'create' ? 'Add New Event' : 'Edit Event'}</DialogTitle>
+          </DialogHeader>
+          <EventForm 
+            event={selectedEvent} 
+            mode={formMode} 
+            onClose={handleFormClose}
+          />
         </DialogContent>
       </Dialog>
     </div>

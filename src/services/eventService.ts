@@ -1,55 +1,156 @@
 
+import { supabase } from '@/integrations/supabase/client';
 import { Event } from '@/types';
-import { isPastEvent } from '@/utils/dateUtils';
-import { eventsData } from '@/data/eventsData';
 
-// Function to get all events (including past ones)
-export const getAllEvents = (): Event[] => {
-  return eventsData;
-};
+// Function to get all events
+export const getAllEvents = async (): Promise<Event[]> => {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .order('date', { ascending: true });
 
-// Function to get all future events
-export const getFutureEvents = (): Event[] => {
-  // For debugging purposes, return all events for now
-  return eventsData;
-  // Uncomment when date filtering is needed
-  // return eventsData.filter(event => !isPastEvent(event.date));
+  if (error) {
+    console.error('Error fetching events:', error);
+    return [];
+  }
+
+  return data || [];
 };
 
 // Function to get events by tag
-export const getEventsByTag = (tag: string): Event[] => {
-  if (!tag) return getFutureEvents();
-  return getFutureEvents().filter(event => event.tag === tag);
+export const getEventsByTag = async (tag: string): Promise<Event[]> => {
+  if (!tag) return getAllEvents();
+  
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('tag', tag)
+    .order('date', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching events by tag:', error);
+    return [];
+  }
+
+  return data || [];
+};
+
+// Function to get events by id
+export const getEventById = async (id: string): Promise<Event | null> => {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error('Error fetching event by id:', error);
+    return null;
+  }
+
+  return data;
 };
 
 // Function to get events by filters
-export const getFilteredEvents = (
+export const getFilteredEvents = async (
   searchTerm: string = '',
   date: Date | undefined = undefined,
   tag: string = ''
-): Event[] => {
-  let filteredEvents = getFutureEvents();
+): Promise<Event[]> => {
+  let query = supabase.from('events').select('*');
   
   // Filter by tag
   if (tag) {
-    filteredEvents = filteredEvents.filter(event => event.tag === tag);
+    query = query.eq('tag', tag);
   }
   
   // Filter by search term
   if (searchTerm) {
     const searchLower = searchTerm.toLowerCase();
-    filteredEvents = filteredEvents.filter(event => 
-      event.name.toLowerCase().includes(searchLower) || 
-      event.description.toLowerCase().includes(searchLower)
-    );
+    query = query.or(`name.ilike.%${searchLower}%,description.ilike.%${searchLower}%`);
   }
   
   // Filter by date
   if (date) {
-    filteredEvents = filteredEvents.filter(event => 
-      new Date(event.date).toDateString() === date.toDateString()
-    );
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+    
+    query = query.gte('date', startOfDay.toISOString()).lte('date', endOfDay.toISOString());
   }
   
-  return filteredEvents;
+  const { data, error } = await query.order('date', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching filtered events:', error);
+    return [];
+  }
+  
+  return data || [];
+};
+
+// Function to get unique event tags
+export const getUniqueEventTags = async (): Promise<string[]> => {
+  const { data, error } = await supabase
+    .from('events')
+    .select('tag');
+
+  if (error) {
+    console.error('Error fetching event tags:', error);
+    return [];
+  }
+
+  // Extract unique tags
+  const tags = data.map(event => event.tag);
+  return [...new Set(tags)];
+};
+
+// Function to create an event
+export const createEvent = async (event: Omit<Event, 'id'>): Promise<Event | null> => {
+  const { data, error } = await supabase
+    .from('events')
+    .insert([event])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error creating event:', error);
+    return null;
+  }
+
+  return data;
+};
+
+// Function to update an event
+export const updateEvent = async (id: string, event: Partial<Event>): Promise<Event | null> => {
+  const { data, error } = await supabase
+    .from('events')
+    .update(event)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error updating event:', error);
+    return null;
+  }
+
+  return data;
+};
+
+// Function to delete an event
+export const deleteEvent = async (id: string): Promise<boolean> => {
+  const { error } = await supabase
+    .from('events')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error deleting event:', error);
+    return false;
+  }
+
+  return true;
 };
