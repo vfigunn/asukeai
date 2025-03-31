@@ -51,6 +51,7 @@ const Admin = () => {
   const { login, signup, isAuthenticated, isAdmin, isLoading, refreshProfile } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -69,7 +70,12 @@ const Admin = () => {
     },
   });
 
-  // Redirect if already authenticated
+  // Clear any auth errors when switching tabs
+  useEffect(() => {
+    setAuthError(null);
+  }, [activeTab]);
+
+  // Check authentication status and redirect if needed
   useEffect(() => {
     if (!isLoading) {
       if (isAuthenticated && isAdmin) {
@@ -79,6 +85,12 @@ const Admin = () => {
         refreshProfile().then(() => {
           if (isAdmin) {
             navigate('/admin/dashboard');
+          } else {
+            toast({
+              title: "Access Restricted",
+              description: "You don't have admin privileges.",
+              variant: "destructive"
+            });
           }
         });
       }
@@ -87,20 +99,32 @@ const Admin = () => {
 
   async function onLoginSubmit(values: LoginFormValues) {
     setIsSubmitting(true);
+    setAuthError(null);
     
     try {
       await login(values.email, values.password);
       
-      // After login, check admin status and refresh profile
-      setTimeout(() => {
-        refreshProfile().then(() => {
-          if (isAdmin) {
-            navigate('/admin/dashboard');
-          }
-        });
-      }, 500);
-    } catch (error) {
+      // After login, wait before checking admin status to ensure DB is updated
+      setTimeout(async () => {
+        await refreshProfile();
+        
+        if (isAdmin) {
+          navigate('/admin/dashboard');
+        } else {
+          toast({
+            title: "Login Successful",
+            description: "You've been logged in successfully.",
+          });
+        }
+      }, 1000);
+    } catch (error: any) {
       console.error("Login error:", error);
+      setAuthError(error.message || "Failed to login. Please check your credentials.");
+      toast({
+        title: "Login Failed",
+        description: error.message || "Invalid credentials. Please try again.",
+        variant: "destructive"
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -108,37 +132,56 @@ const Admin = () => {
 
   async function onSignupSubmit(values: SignupFormValues) {
     setIsSubmitting(true);
+    setAuthError(null);
     
     try {
       await signup(values.email, values.password, values.name);
       
-      // After signup, check admin status with a delay to allow DB trigger to complete
-      setTimeout(() => {
-        refreshProfile().then(() => {
-          // If they're admin (which should happen for first user), redirect to dashboard
-          if (isAdmin) {
-            toast({
-              title: "Admin access granted",
-              description: "You are the first user and have been granted admin privileges.",
-            });
-            navigate('/admin/dashboard');
-          } else {
-            toast({
-              title: "Account created",
-              description: "Your account has been created. Please log in.",
-            });
-            setActiveTab("login");
-            signupForm.reset();
-          }
-        });
-      }, 1500);
-    } catch (error) {
+      toast({
+        title: "Account Created",
+        description: "Your account has been created successfully.",
+      });
+      
+      // After signup, wait before checking admin status to ensure DB trigger completes
+      setTimeout(async () => {
+        await refreshProfile();
+        
+        if (isAdmin) {
+          toast({
+            title: "Admin Access Granted",
+            description: "You are the first user and have been granted admin privileges.",
+          });
+          navigate('/admin/dashboard');
+        } else {
+          setActiveTab("login");
+          signupForm.reset();
+        }
+      }, 2000); // Increased timeout to ensure DB trigger completes
+    } catch (error: any) {
       console.error("Signup error:", error);
+      setAuthError(error.message || "Failed to create account. Please try again.");
+      
+      // Handle different error types
+      if (error.message?.includes("already registered")) {
+        toast({
+          title: "Account Already Exists",
+          description: "This email is already registered. Please log in instead.",
+          variant: "destructive"
+        });
+        setActiveTab("login");
+      } else {
+        toast({
+          title: "Signup Failed",
+          description: error.message || "Failed to create account. Please try again.",
+          variant: "destructive"
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
   }
 
+  // Show loading state while checking authentication
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[70vh]">
@@ -156,6 +199,12 @@ const Admin = () => {
         </div>
         
         <div className="p-6">
+          {authError && (
+            <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-md text-destructive text-sm">
+              {authError}
+            </div>
+          )}
+          
           <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "login" | "signup")}>
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="login">Login</TabsTrigger>
