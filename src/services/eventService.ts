@@ -125,22 +125,25 @@ export const createEvent = async (event: {
 
   if (error) {
     console.error('Error creating event:', error);
-    return null;
+    throw new Error(error.message);
   }
 
   return data;
 };
 
-// Function to update an event - updated to match createEvent parameter type
-export const updateEvent = async (id: string, event: Partial<{
-  name: string;
-  date: string;
-  address: string;
-  description: string;
-  price: number;
-  image: string;
-  tag: string;
-}>): Promise<Event | null> => {
+// Function to update an event - corrected to accept partial event data
+export const updateEvent = async (
+  id: string, 
+  event: {
+    name: string;
+    date: string;
+    address: string;
+    description: string;
+    price: number;
+    image: string;
+    tag: string;
+  }
+): Promise<Event | null> => {
   const { data, error } = await supabase
     .from('events')
     .update(event)
@@ -150,7 +153,7 @@ export const updateEvent = async (id: string, event: Partial<{
 
   if (error) {
     console.error('Error updating event:', error);
-    return null;
+    throw new Error(error.message);
   }
 
   return data;
