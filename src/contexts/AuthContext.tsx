@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { getUserProfile } from '@/services/userService';
 
 interface Profile {
   id: string;
@@ -21,6 +22,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, name: string) => Promise<void>;
   logout: () => Promise<void>;
+  refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,17 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Fetch profile data for a user
   const fetchProfile = async (userId: string) => {
     try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
-
-      if (error) {
-        console.error('Error fetching profile:', error);
-        return null;
-      }
-
+      const data = await getUserProfile(userId);
       return data as Profile;
     } catch (error) {
       console.error('Error in fetchProfile:', error);
@@ -53,16 +45,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Refresh the current user's profile data
+  const refreshProfile = async () => {
+    if (!user) return;
+    
+    try {
+      const profileData = await fetchProfile(user.id);
+      setProfile(profileData);
+      console.log('Profile refreshed:', profileData);
+    } catch (error) {
+      console.error('Error refreshing profile:', error);
+    }
+  };
+
   useEffect(() => {
     // Set up auth state change listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
+        console.log('Auth state change:', event, currentSession?.user?.id);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
 
         if (currentSession?.user) {
           const profileData = await fetchProfile(currentSession.user.id);
           setProfile(profileData);
+          console.log('Profile after auth change:', profileData);
         } else {
           setProfile(null);
         }
@@ -81,6 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (currentSession?.user) {
           const profileData = await fetchProfile(currentSession.user.id);
           setProfile(profileData);
+          console.log('Initial profile:', profileData);
         }
       } catch (error) {
         console.error('Error initializing auth:', error);
@@ -107,6 +115,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       if (error) throw error;
+
+      // Refresh profile to get admin status
+      if (data.user) {
+        const profileData = await fetchProfile(data.user.id);
+        setProfile(profileData);
+      }
 
       // Success notification
       toast({
@@ -140,6 +154,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       if (error) throw error;
+
+      // Add a delay to allow the database trigger to complete
+      setTimeout(async () => {
+        if (data.user) {
+          const profileData = await fetchProfile(data.user.id);
+          setProfile(profileData);
+          console.log('Profile after signup:', profileData);
+        }
+      }, 1000);
 
       toast({
         title: "Account created",
@@ -184,7 +207,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         login,
         signup,
-        logout
+        logout,
+        refreshProfile
       }}
     >
       {children}

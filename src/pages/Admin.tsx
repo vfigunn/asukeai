@@ -48,7 +48,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 
 const Admin = () => {
   const navigate = useNavigate();
-  const { login, signup, isAuthenticated, isAdmin, isLoading } = useAuth();
+  const { login, signup, isAuthenticated, isAdmin, isLoading, refreshProfile } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
 
@@ -71,17 +71,34 @@ const Admin = () => {
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (isAuthenticated && isAdmin && !isLoading) {
-      navigate('/admin/dashboard');
+    if (!isLoading) {
+      if (isAuthenticated && isAdmin) {
+        navigate('/admin/dashboard');
+      } else if (isAuthenticated) {
+        // If authenticated but not admin, refresh profile to check if they should be admin
+        refreshProfile().then(() => {
+          if (isAdmin) {
+            navigate('/admin/dashboard');
+          }
+        });
+      }
     }
-  }, [isAuthenticated, isAdmin, isLoading, navigate]);
+  }, [isAuthenticated, isAdmin, isLoading, navigate, refreshProfile]);
 
   async function onLoginSubmit(values: LoginFormValues) {
     setIsSubmitting(true);
     
     try {
       await login(values.email, values.password);
-      // Redirect handled by useEffect
+      
+      // After login, check admin status and refresh profile
+      setTimeout(() => {
+        refreshProfile().then(() => {
+          if (isAdmin) {
+            navigate('/admin/dashboard');
+          }
+        });
+      }, 500);
     } catch (error) {
       console.error("Login error:", error);
     } finally {
@@ -94,14 +111,27 @@ const Admin = () => {
     
     try {
       await signup(values.email, values.password, values.name);
-      // After signup, we'll want to check if they're the first user (and thus admin)
-      // This is handled by the database trigger
-      toast({
-        title: "Account created",
-        description: "Your account has been created. Please log in.",
-      });
-      setActiveTab("login");
-      signupForm.reset();
+      
+      // After signup, check admin status with a delay to allow DB trigger to complete
+      setTimeout(() => {
+        refreshProfile().then(() => {
+          // If they're admin (which should happen for first user), redirect to dashboard
+          if (isAdmin) {
+            toast({
+              title: "Admin access granted",
+              description: "You are the first user and have been granted admin privileges.",
+            });
+            navigate('/admin/dashboard');
+          } else {
+            toast({
+              title: "Account created",
+              description: "Your account has been created. Please log in.",
+            });
+            setActiveTab("login");
+            signupForm.reset();
+          }
+        });
+      }, 1500);
     } catch (error) {
       console.error("Signup error:", error);
     } finally {

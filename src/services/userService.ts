@@ -32,3 +32,19 @@ export const toggleAdminStatus = async (userId: string, isAdmin: boolean) => {
 
   return data;
 };
+
+// Get user profile by ID
+export const getUserProfile = async (userId: string) => {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId)
+    .single();
+
+  if (error) {
+    console.error('Error fetching user profile:', error);
+    throw new Error(error.message);
+  }
+
+  return data;
+};
