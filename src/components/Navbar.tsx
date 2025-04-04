@@ -1,23 +1,13 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { isAuthenticated, isAdmin, refreshProfile } = useAuth();
   
   const isActive = (path: string) => location.pathname === path;
-
-  useEffect(() => {
-    // Refresh profile on navigation to ensure admin status is current
-    if (isAuthenticated) {
-      refreshProfile();
-    }
-  }, [location.pathname, isAuthenticated, refreshProfile]);
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
@@ -34,29 +24,6 @@ const Navbar = () => {
           <Link to="/about" className={`text-base font-medium transition-colors ${isActive('/about') ? 'text-primary' : 'text-foreground/80 hover:text-primary'}`}>
             About Us
           </Link>
-          
-          {/* Admin link - different display based on auth state */}
-          {isAuthenticated && isAdmin ? (
-            <Link 
-              to="/admin/dashboard" 
-              className={`text-base font-medium transition-colors flex items-center ${
-                isActive('/admin/dashboard') ? 'text-primary' : 'text-foreground/80 hover:text-primary'
-              }`}
-            >
-              <Shield size={16} className="mr-1" />
-              Admin Dashboard
-            </Link>
-          ) : (
-            <Link 
-              to="/admin" 
-              className={`text-base font-medium transition-colors flex items-center ${
-                isActive('/admin') ? 'text-primary' : 'text-foreground/80 hover:text-primary'
-              }`}
-            >
-              <User size={16} className="mr-1" />
-              Admin
-            </Link>
-          )}
         </div>
         
         {/* Mobile menu button */}
@@ -86,29 +53,6 @@ const Navbar = () => {
             >
               About Us
             </Link>
-            {isAuthenticated && isAdmin ? (
-              <Link 
-                to="/admin/dashboard" 
-                className={`text-base font-medium py-2 flex items-center ${
-                  isActive('/admin/dashboard') ? 'text-primary' : 'text-foreground/80'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Shield size={16} className="mr-1" />
-                Admin Dashboard
-              </Link>
-            ) : (
-              <Link 
-                to="/admin" 
-                className={`text-base font-medium py-2 flex items-center ${
-                  isActive('/admin') ? 'text-primary' : 'text-foreground/80'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <User size={16} className="mr-1" />
-                Admin
-              </Link>
-            )}
           </div>
         </div>
       )}

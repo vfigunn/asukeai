@@ -61,6 +61,66 @@ export const eventsData: Event[] = [
     price: 150,
     image: 'https://images.unsplash.com/photo-1567016520496-0cb4edbb9dc5?q=80&w=2070&auto=format&fit=crop',
     tag: 'Party'
+  },
+  {
+    id: '7',
+    name: 'Comedy Night',
+    date: '2024-09-05T20:00:00',
+    address: 'Laugh Factory, Chicago',
+    description: 'An evening of non-stop laughter with the funniest stand-up comedians in the country.',
+    price: 35,
+    image: 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?q=80&w=2071&auto=format&fit=crop',
+    tag: 'Entertainment'
+  },
+  {
+    id: '8',
+    name: 'Film Festival',
+    date: '2024-10-05T10:00:00',
+    address: 'Cinema Complex, Austin',
+    description: 'A weekend showcasing independent films from around the world with director Q&A sessions.',
+    price: 85,
+    image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2069&auto=format&fit=crop',
+    tag: 'Entertainment'
+  },
+  {
+    id: '9',
+    name: 'Marathon for Charity',
+    date: '2024-09-25T07:00:00',
+    address: 'Downtown, Boston',
+    description: 'Run for a cause! Join thousands of participants in this annual charity marathon supporting children\'s education.',
+    price: 45,
+    image: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd1?q=80&w=2074&auto=format&fit=crop',
+    tag: 'Sports'
+  },
+  {
+    id: '10',
+    name: 'Craft Beer Festival',
+    date: '2024-08-28T16:00:00',
+    address: 'Waterfront Park, Portland',
+    description: 'Sample over 100 craft beers from local and international breweries, with live music and food trucks.',
+    price: 60,
+    image: 'https://images.unsplash.com/photo-1575367439058-6096bb9cf5e2?q=80&w=2070&auto=format&fit=crop',
+    tag: 'Food'
+  },
+  {
+    id: '11',
+    name: 'Gardening Workshop',
+    date: '2024-09-18T09:00:00',
+    address: 'Botanical Garden, Denver',
+    description: 'Learn sustainable gardening techniques from master gardeners in this hands-on workshop.',
+    price: 25,
+    image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=2088&auto=format&fit=crop',
+    tag: 'Workshop'
+  },
+  {
+    id: '12',
+    name: 'Classical Music Concert',
+    date: '2024-11-12T19:30:00',
+    address: 'Symphony Hall, Boston',
+    description: 'Experience the magnificent sounds of the city orchestra performing Beethoven and Mozart classics.',
+    price: 70,
+    image: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=2070&auto=format&fit=crop',
+    tag: 'Music'
   }
 ];
 

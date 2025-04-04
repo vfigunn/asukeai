@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import EventCard from '@/components/EventCard';
 import EventModal from '@/components/EventModal';
@@ -7,7 +7,6 @@ import EventFilters from '@/components/EventFilters';
 import TagFilter from '@/components/TagFilter';
 import { getFilteredEvents, getUniqueEventTags } from '@/services/eventService';
 import { Event } from '@/types';
-import { toast } from "@/hooks/use-toast";
 import { Loader2 } from 'lucide-react';
 
 const Index = () => {
@@ -28,25 +27,6 @@ const Index = () => {
     queryKey: ['events', searchTerm, selectedDate, selectedTag],
     queryFn: () => getFilteredEvents(searchTerm, selectedDate, selectedTag),
   });
-
-  // Show error if events or tags query fails
-  useEffect(() => {
-    if (eventsQuery.error) {
-      toast({
-        title: "Error loading events",
-        description: "Failed to load events. Please try again later.",
-        variant: "destructive"
-      });
-    }
-
-    if (tagsQuery.error) {
-      toast({
-        title: "Error loading categories",
-        description: "Failed to load event categories. Please try again later.",
-        variant: "destructive"
-      });
-    }
-  }, [eventsQuery.error, tagsQuery.error]);
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event);
