@@ -52,6 +52,7 @@ const Admin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   const [authError, setAuthError] = useState<string | null>(null);
+  const [isCheckingAdminStatus, setIsCheckingAdminStatus] = useState(false);
 
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -75,27 +76,58 @@ const Admin = () => {
     setAuthError(null);
   }, [activeTab]);
 
+  // Function to check admin status with retry
+  const checkAndRedirectIfAdmin = async (attempts = 5, delay = 1000) => {
+    setIsCheckingAdminStatus(true);
+    
+    let currentAttempt = 0;
+    
+    const checkStatus = async () => {
+      currentAttempt++;
+      console.log(`Checking admin status, attempt ${currentAttempt}`);
+      
+      await refreshProfile();
+      
+      if (isAdmin) {
+        console.log("Admin status confirmed, redirecting");
+        navigate('/admin/dashboard');
+        setIsCheckingAdminStatus(false);
+        return true;
+      }
+      
+      if (currentAttempt >= attempts) {
+        console.log("Max attempts reached, not an admin");
+        if (isAuthenticated) {
+          toast({
+            title: "Access Restricted",
+            description: "You don't have admin privileges.",
+            variant: "destructive"
+          });
+        }
+        setIsCheckingAdminStatus(false);
+        return false;
+      }
+      
+      console.log(`Retrying in ${delay}ms...`);
+      setTimeout(checkStatus, delay);
+    };
+    
+    return checkStatus();
+  };
+
   // Check authentication status and redirect if needed
   useEffect(() => {
-    if (!isLoading) {
-      if (isAuthenticated && isAdmin) {
-        navigate('/admin/dashboard');
-      } else if (isAuthenticated) {
-        // If authenticated but not admin, refresh profile to check if they should be admin
-        refreshProfile().then(() => {
-          if (isAdmin) {
-            navigate('/admin/dashboard');
-          } else {
-            toast({
-              title: "Access Restricted",
-              description: "You don't have admin privileges.",
-              variant: "destructive"
-            });
-          }
-        });
+    if (!isLoading && !isCheckingAdminStatus) {
+      if (isAuthenticated) {
+        if (isAdmin) {
+          navigate('/admin/dashboard');
+        } else {
+          // If authenticated but not admin, refresh profile to check if they should be admin
+          checkAndRedirectIfAdmin();
+        }
       }
     }
-  }, [isAuthenticated, isAdmin, isLoading, navigate, refreshProfile]);
+  }, [isAuthenticated, isAdmin, isLoading, navigate]);
 
   async function onLoginSubmit(values: LoginFormValues) {
     setIsSubmitting(true);
@@ -104,27 +136,17 @@ const Admin = () => {
     try {
       await login(values.email, values.password);
       
-      // After login, wait before checking admin status to ensure DB is updated
-      setTimeout(async () => {
-        await refreshProfile();
-        
-        if (isAdmin) {
-          navigate('/admin/dashboard');
-        } else {
-          toast({
-            title: "Login Successful",
-            description: "You've been logged in successfully.",
-          });
-        }
-      }, 1000);
+      toast({
+        title: "Login Successful",
+        description: "Checking your admin status...",
+      });
+      
+      // After login, check admin status with retries
+      checkAndRedirectIfAdmin();
+      
     } catch (error: any) {
       console.error("Login error:", error);
       setAuthError(error.message || "Failed to login. Please check your credentials.");
-      toast({
-        title: "Login Failed",
-        description: error.message || "Invalid credentials. Please try again.",
-        variant: "destructive"
-      });
     } finally {
       setIsSubmitting(false);
     }
@@ -139,37 +161,31 @@ const Admin = () => {
       
       toast({
         title: "Account Created",
-        description: "Your account has been created successfully.",
+        description: "Your account has been created successfully. Checking admin status...",
       });
       
-      // After signup, wait before checking admin status to ensure DB trigger completes
-      setTimeout(async () => {
-        await refreshProfile();
-        
-        if (isAdmin) {
-          toast({
-            title: "Admin Access Granted",
-            description: "You are the first user and have been granted admin privileges.",
-          });
-          navigate('/admin/dashboard');
-        } else {
-          setActiveTab("login");
-          signupForm.reset();
-        }
-      }, 2000); // Increased timeout to ensure DB trigger completes
+      // After signup, check admin status with retries
+      // First signup usually gets admin automatically
+      checkAndRedirectIfAdmin(10, 1000); // More attempts with 1s delay
+      
     } catch (error: any) {
       console.error("Signup error:", error);
-      setAuthError(error.message || "Failed to create account. Please try again.");
       
       // Handle different error types
       if (error.message?.includes("already registered")) {
+        setAuthError("This email is already registered. Please log in instead.");
+        
         toast({
           title: "Account Already Exists",
           description: "This email is already registered. Please log in instead.",
           variant: "destructive"
         });
+        
         setActiveTab("login");
+        loginForm.setValue("email", values.email);
       } else {
+        setAuthError(error.message || "Failed to create account. Please try again.");
+        
         toast({
           title: "Signup Failed",
           description: error.message || "Failed to create account. Please try again.",
@@ -202,6 +218,13 @@ const Admin = () => {
           {authError && (
             <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-md text-destructive text-sm">
               {authError}
+            </div>
+          )}
+          
+          {isCheckingAdminStatus && (
+            <div className="mb-4 p-3 bg-primary/10 border border-primary/20 rounded-md text-primary text-sm flex items-center">
+              <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              Verifying admin status...
             </div>
           )}
           
@@ -253,7 +276,7 @@ const Admin = () => {
                     )}
                   />
                   
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  <Button type="submit" className="w-full" disabled={isSubmitting || isCheckingAdminStatus}>
                     {isSubmitting ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -326,7 +349,7 @@ const Admin = () => {
                     )}
                   />
                   
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  <Button type="submit" className="w-full" disabled={isSubmitting || isCheckingAdminStatus}>
                     {isSubmitting ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

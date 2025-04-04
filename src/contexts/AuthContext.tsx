@@ -156,13 +156,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (error) throw error;
 
       // Add a delay to allow the database trigger to complete
+      // Increased timeout to ensure trigger has time to complete
       setTimeout(async () => {
         if (data.user) {
           const profileData = await fetchProfile(data.user.id);
           setProfile(profileData);
           console.log('Profile after signup:', profileData);
         }
-      }, 1000);
+      }, 2000);
 
       toast({
         title: "Account created",
