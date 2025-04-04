@@ -76,16 +76,18 @@ const Admin = () => {
     setAuthError(null);
   }, [activeTab]);
 
-  // Function to check admin status with retry
-  const checkAndRedirectIfAdmin = async (attempts = 5, delay = 1000) => {
+  // Function to check admin status with more robust retry mechanism
+  const checkAndRedirectIfAdmin = async (maxAttempts = 10, initialDelay = 500) => {
     setIsCheckingAdminStatus(true);
     
     let currentAttempt = 0;
+    let delay = initialDelay;
     
     const checkStatus = async () => {
       currentAttempt++;
-      console.log(`Checking admin status, attempt ${currentAttempt}`);
+      console.log(`Checking admin status, attempt ${currentAttempt}/${maxAttempts}`);
       
+      // Force a profile refresh to get latest admin status
       await refreshProfile();
       
       if (isAdmin) {
@@ -95,12 +97,12 @@ const Admin = () => {
         return true;
       }
       
-      if (currentAttempt >= attempts) {
-        console.log("Max attempts reached, not an admin");
+      if (currentAttempt >= maxAttempts) {
+        console.log("Max attempts reached, might not be an admin");
         if (isAuthenticated) {
           toast({
-            title: "Access Restricted",
-            description: "You don't have admin privileges.",
+            title: "Admin Status Check",
+            description: "You are logged in, but don't have admin privileges. If this is unexpected, please try logging out and back in.",
             variant: "destructive"
           });
         }
@@ -108,6 +110,8 @@ const Admin = () => {
         return false;
       }
       
+      // Increase delay with each attempt (exponential backoff)
+      delay = Math.min(delay * 1.5, 5000); // Cap at 5 seconds
       console.log(`Retrying in ${delay}ms...`);
       setTimeout(checkStatus, delay);
     };
@@ -115,14 +119,19 @@ const Admin = () => {
     return checkStatus();
   };
 
-  // Check authentication status and redirect if needed
+  // Check authentication status and admin privileges on component mount and when auth state changes
   useEffect(() => {
     if (!isLoading && !isCheckingAdminStatus) {
       if (isAuthenticated) {
+        console.log("User is authenticated, checking admin status");
+        console.log("Current admin status:", isAdmin);
+        
         if (isAdmin) {
+          console.log("User is admin, redirecting to dashboard");
           navigate('/admin/dashboard');
         } else {
-          // If authenticated but not admin, refresh profile to check if they should be admin
+          // If authenticated but not admin, check again with retries
+          console.log("User is not admin yet, checking with retries");
           checkAndRedirectIfAdmin();
         }
       }
@@ -134,6 +143,7 @@ const Admin = () => {
     setAuthError(null);
     
     try {
+      console.log("Attempting login with:", values.email);
       await login(values.email, values.password);
       
       toast({
@@ -141,8 +151,8 @@ const Admin = () => {
         description: "Checking your admin status...",
       });
       
-      // After login, check admin status with retries
-      checkAndRedirectIfAdmin();
+      // After login, check admin status with more attempts and longer delays
+      checkAndRedirectIfAdmin(15, 500);
       
     } catch (error: any) {
       console.error("Login error:", error);
@@ -157,6 +167,7 @@ const Admin = () => {
     setAuthError(null);
     
     try {
+      console.log("Attempting signup with:", values.email);
       await signup(values.email, values.password, values.name);
       
       toast({
@@ -164,9 +175,8 @@ const Admin = () => {
         description: "Your account has been created successfully. Checking admin status...",
       });
       
-      // After signup, check admin status with retries
-      // First signup usually gets admin automatically
-      checkAndRedirectIfAdmin(10, 1000); // More attempts with 1s delay
+      // After signup, check admin status with more attempts and longer delays for first user
+      checkAndRedirectIfAdmin(20, 500);
       
     } catch (error: any) {
       console.error("Signup error:", error);
@@ -202,6 +212,7 @@ const Admin = () => {
     return (
       <div className="flex items-center justify-center min-h-[70vh]">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2">Loading authentication state...</span>
       </div>
     );
   }
@@ -224,7 +235,7 @@ const Admin = () => {
           {isCheckingAdminStatus && (
             <div className="mb-4 p-3 bg-primary/10 border border-primary/20 rounded-md text-primary text-sm flex items-center">
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              Verifying admin status...
+              Verifying admin status... This may take a moment.
             </div>
           )}
           

@@ -34,27 +34,46 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  // Fetch profile data for a user
-  const fetchProfile = async (userId: string) => {
+  // Fetch profile data for a user with retries
+  const fetchProfile = async (userId: string, retryCount = 3, delay = 1000): Promise<Profile | null> => {
     try {
+      console.log(`Attempting to fetch profile for user ${userId}, attempt 1/${retryCount + 1}`);
       const data = await getUserProfile(userId);
+      console.log("Profile data received:", data);
       return data as Profile;
     } catch (error) {
       console.error('Error in fetchProfile:', error);
+      
+      if (retryCount > 0) {
+        console.log(`Retrying profile fetch in ${delay}ms, ${retryCount} attempts left`);
+        return new Promise(resolve => {
+          setTimeout(async () => {
+            const result = await fetchProfile(userId, retryCount - 1, delay * 1.5);
+            resolve(result);
+          }, delay);
+        });
+      }
+      
       return null;
     }
   };
 
-  // Refresh the current user's profile data
-  const refreshProfile = async () => {
+  // Refresh the current user's profile data with retries
+  const refreshProfile = async (retryCount = 3, delay = 1000): Promise<void> => {
     if (!user) return;
     
     try {
+      console.log(`Refreshing profile for user ${user.id}, attempt 1/${retryCount + 1}`);
       const profileData = await fetchProfile(user.id);
       setProfile(profileData);
       console.log('Profile refreshed:', profileData);
     } catch (error) {
       console.error('Error refreshing profile:', error);
+      
+      if (retryCount > 0) {
+        console.log(`Retrying profile refresh in ${delay}ms, ${retryCount} attempts left`);
+        setTimeout(() => refreshProfile(retryCount - 1, delay * 1.5), delay);
+      }
     }
   };
 
@@ -116,10 +135,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (error) throw error;
 
-      // Refresh profile to get admin status
+      // Refresh profile multiple times with increasing delay to ensure we get admin status
       if (data.user) {
+        // First immediate fetch
         const profileData = await fetchProfile(data.user.id);
         setProfile(profileData);
+        
+        // Schedule additional refreshes with increasing delays
+        setTimeout(() => refreshProfile(), 1000);
+        setTimeout(() => refreshProfile(), 3000);
       }
 
       // Success notification
@@ -155,20 +179,43 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (error) throw error;
 
-      // Add a delay to allow the database trigger to complete
-      // Increased timeout to ensure trigger has time to complete
-      setTimeout(async () => {
-        if (data.user) {
-          const profileData = await fetchProfile(data.user.id);
-          setProfile(profileData);
-          console.log('Profile after signup:', profileData);
-        }
-      }, 2000);
-
+      // We need to give the database trigger enough time to complete
+      // and set the admin status for the first user
+      console.log("Signup successful, waiting for database triggers to complete");
+      
       toast({
         title: "Account created",
-        description: "Your account has been created successfully",
+        description: "Your account has been created successfully. Checking admin status...",
       });
+      
+      // Schedule multiple profile refreshes with increasing delays
+      setTimeout(async () => {
+        if (data.user) {
+          console.log("First profile refresh after signup");
+          const profileData = await fetchProfile(data.user.id, 3, 1000);
+          setProfile(profileData);
+          console.log('Profile after signup (1st check):', profileData);
+        }
+      }, 1000);
+      
+      setTimeout(async () => {
+        if (data.user) {
+          console.log("Second profile refresh after signup");
+          const profileData = await fetchProfile(data.user.id, 3, 1000);
+          setProfile(profileData);
+          console.log('Profile after signup (2nd check):', profileData);
+        }
+      }, 3000);
+      
+      setTimeout(async () => {
+        if (data.user) {
+          console.log("Third profile refresh after signup");
+          const profileData = await fetchProfile(data.user.id, 3, 1000);
+          setProfile(profileData);
+          console.log('Profile after signup (3rd check):', profileData);
+        }
+      }, 6000);
+      
     } catch (error: any) {
       toast({
         title: "Signup failed",
