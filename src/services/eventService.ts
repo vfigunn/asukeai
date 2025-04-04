@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { Event } from '@/types';
 
@@ -107,7 +106,7 @@ export const getUniqueEventTags = async (): Promise<string[]> => {
   return [...new Set(tags)];
 };
 
-// Function to create an event - updated to ensure required fields
+// Function to create an event - kept the same as it requires all fields
 export const createEvent = async (event: {
   name: string;
   date: string;
@@ -131,10 +130,10 @@ export const createEvent = async (event: {
   return data;
 };
 
-// Function to update an event - corrected to accept partial event data
+// Updated function to accept partial event data for updates
 export const updateEvent = async (
   id: string, 
-  event: {
+  event: Partial<{
     name: string;
     date: string;
     address: string;
@@ -142,7 +141,7 @@ export const updateEvent = async (
     price: number;
     image: string;
     tag: string;
-  }
+  }>
 ): Promise<Event | null> => {
   const { data, error } = await supabase
     .from('events')
