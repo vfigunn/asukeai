@@ -106,7 +106,7 @@ export const getUniqueEventTags = async (): Promise<string[]> => {
   return [...new Set(tags)];
 };
 
-// Function to create an event - kept the same as it requires all fields
+// Function to create an event
 export const createEvent = async (event: {
   name: string;
   date: string;
@@ -130,18 +130,10 @@ export const createEvent = async (event: {
   return data;
 };
 
-// Updated function to accept partial event data for updates
+// Updated function to accept an Event type for consistent typing
 export const updateEvent = async (
   id: string, 
-  event: Partial<{
-    name: string;
-    date: string;
-    address: string;
-    description: string;
-    price: number;
-    image: string;
-    tag: string;
-  }>
+  event: Partial<Event>
 ): Promise<Event | null> => {
   const { data, error } = await supabase
     .from('events')

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -84,7 +85,7 @@ const EventForm: React.FC<EventFormProps> = ({ event, mode, onClose }) => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: EventFormValues }) => updateEvent(id, data),
+    mutationFn: ({ id, data }: { id: string; data: Partial<Event> }) => updateEvent(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
       toast({
