@@ -29,8 +29,8 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
             console.error("Failed to load image for event:", event.name);
           }}
         />
-        <div className="absolute top-3 right-3">
-          <Badge className={`tag tag-${event.tag.toLowerCase()}`}>{event.tag}</Badge>
+        <div className="absolute top-3 right-3 ">
+          <Badge className={`tag tag-${event.tag.toLowerCase()} `}>{event.tag}</Badge>
         </div>
       </div>
       

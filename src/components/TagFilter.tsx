@@ -14,15 +14,15 @@ const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect })
   }
 
   return (
-    <div className="w-full overflow-x-auto tag-filter-container pb-4">
-      <div className="flex space-x-3 min-w-max">
+    <div className="w-full overflow-x-auto tag-filter-container pb-4 ">
+      <div className="flex space-x-3 min-w-max ">
         <button
           onClick={() => onTagSelect('')}
           className={cn(
-            "px-4 py-2 rounded-full text-sm font-medium transition-all",
+            "px-4 py-2 rounded-full text-sm font-medium transition-all ",
             !selectedTag 
               ? "bg-primary text-primary-foreground shadow-md" 
-              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              : "bg-secondary text-secondary-foreground hover:bg-secondary/80 "
           )}
         >
           Todos
@@ -36,7 +36,7 @@ const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect })
               "px-4 py-2 rounded-full text-sm font-medium transition-all",
               selectedTag === tag 
                 ? "bg-primary text-primary-foreground shadow-md" 
-                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80 "
             )}
           >
             {tag}
