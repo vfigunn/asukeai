@@ -19,11 +19,11 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
 
   return (
     <Card className="event-card cursor-pointer overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1" onClick={onClick}>
-      <div className="aspect-[16/9] overflow-hidden relative">
+      <div className="aspect-[1/1] overflow-hidden relative">
         <img 
           src={event.image} 
           alt={event.name} 
-          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          className="w-full h-full object-contain transition-transform duration-300 hover:scale-105"
           onError={(e) => {
             e.currentTarget.src = "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop";
             console.error("Failed to load image for event:", event.name);
@@ -50,14 +50,14 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
           
           <div className="flex items-center text-sm">
             <Clock size={14} className="mr-2 flex-shrink-0" />
-            <span>{formatTime(event.date)}</span>
+            <span>{event.time}</span>
           </div>
         </div>
       </CardContent>
       
-      <CardFooter className="p-4 pt-0 border-t mt-auto">
+      <CardFooter className="p-4 pt-4 border-t mt-auto">
         <p className="text-lg font-bold text-primary w-full">
-          {event.price === 0 ? 'Free' : `$${event.price}`}
+          {event.price === '0' ? 'Entrada libre y gratuita' : `${event.price}`}
         </p>
       </CardFooter>
     </Card>

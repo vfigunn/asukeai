@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Facebook, Instagram, Twitter, Mail } from 'lucide-react';
+import { SocialIcon } from 'react-social-icons'
 import ContactForm from '@/components/ContactForm';
 
 const About = () => {
@@ -8,28 +8,29 @@ const About = () => {
     <div>
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold mb-6">About FestiVibe</h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-6">Acerca de Asukeai</h1>
           <p className="text-xl text-gray-600">
-            Your gateway to unforgettable experiences
+              Publicamos eventos en nuestra agenda cultural    
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Our Mission</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Nuestra Misión</h2>
             <p className="text-gray-700 mb-4">
-              At FestiVibe, we're passionate about connecting people with amazing experiences. 
-              Our mission is to make it easy for everyone to discover and attend the best events 
-              in their area, from music festivals to art exhibitions, food tastings to tech conferences.
+            En Asukeai nos apasiona conectar a la gente con experiencias increíbles. 
+            Nuestra misión es facilitar que todo el mundo descubra y asista a los mejores eventos 
+            en su zona, desde festivales de música a exposiciones de arte, ferias gastronómicas o conferencias.
             </p>
             <p className="text-gray-700">
-              We believe that experiences bring people together and create lasting memories. That's 
-              why we're committed to showcasing diverse events that appeal to all interests and backgrounds.
+            Creemos que las experiencias unen a las personas y crean recuerdos duraderos. Por eso, 
+            nos comprometemos a presentar eventos variados que atraigan a todo tipo de personas.
             </p>
           </div>
           <div className="rounded-lg overflow-hidden shadow-lg">
             <img 
-              src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop" 
+              src="https://i.ibb.co/7JSY9tYj/Header-Asukeai-Agenda-Cultural-Recomendada.gif" 
+//https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop              
               alt="Event crowd" 
               className="w-full h-full object-cover"
             />
@@ -43,9 +44,9 @@ const About = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold mb-2">Curated Selection</h3>
+            <h3 className="text-xl font-bold mb-2">Selección de Eventos</h3>
             <p className="text-gray-600">
-              We carefully select and showcase the best events to ensure quality experiences for our users.
+                Seleccionamos y presentamos los mejores eventos para garantizar experiencias de calidad a nuestros usuarios.            
             </p>
           </div>
           
@@ -55,9 +56,9 @@ const About = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold mb-2">Up-to-date Information</h3>
+            <h3 className="text-xl font-bold mb-2">Información actualizada</h3>
             <p className="text-gray-600">
-              Our platform automatically updates to show only upcoming events, so you never miss out.
+            Nuestra plataforma se actualiza automáticamente para mostrar sólo los próximos eventos, de modo que nunca se los pierda.            
             </p>
           </div>
           
@@ -67,20 +68,19 @@ const About = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold mb-2">Community Focused</h3>
+            <h3 className="text-xl font-bold mb-2">Enfoque comunitario</h3>
             <p className="text-gray-600">
-              We're committed to supporting event organizers and helping them reach their target audience.
+              Nos comprometemos a apoyar a los organizadores de eventos y ayudarles a llegar a su público objetivo.            
             </p>
           </div>
         </div>
       </section>
-      
       <section className="container mx-auto px-4 py-16 bg-gray-50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Contact Us</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Contacto</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Have questions or feedback? Want to submit an event? Get in touch with our team.
+            ¿Tiene preguntas o comentarios? ¿Quiere presentar un evento? Póngase en contacto con nuestro equipo.
             </p>
           </div>
           
@@ -88,117 +88,65 @@ const About = () => {
             <ContactForm />
             
             <div className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold mb-6">Connect With Us</h3>
+              <h3 className="text-2xl font-bold mb-6">Nuestras Redes</h3>
               <p className="text-gray-600 mb-8">
-                Follow us on social media for the latest updates on upcoming events and exclusive content.
+              Síganos en las redes sociales para estar al día de los próximos eventos y contenidos exclusivos.
               </p>
               
               <div className="space-y-6">
                 <a 
-                  href="https://facebook.com" 
+                  href="https://www.facebook.com/asukeai/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <Facebook size={24} className="text-[#1877F2] mr-4" />
+                  <SocialIcon url='https://www.facebook.com/asukeai/' className="text-[#1877F2] mr-4" target="_blank" />
                   <div>
                     <h4 className="font-bold">Facebook</h4>
-                    <p className="text-sm text-gray-500">@festivibe</p>
+                    <p className="text-sm text-gray-500">@asukeai</p>
                   </div>
                 </a>
                 
                 <a 
-                  href="https://instagram.com" 
+                  href="https://instagram.com/asukeai_py" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <Instagram size={24} className="text-[#E1306C] mr-4" />
+                  <SocialIcon url='https://instagram.com/asukeai_py' className="text-[#E1306C] mr-4" target="_blank"  />
                   <div>
                     <h4 className="font-bold">Instagram</h4>
-                    <p className="text-sm text-gray-500">@festivibe</p>
+                    <p className="text-sm text-gray-500">@asukeai_py</p>
                   </div>
                 </a>
                 
                 <a 
-                  href="https://twitter.com" 
+                  href="https://x.com/asukeai" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <Twitter size={24} className="text-[#1DA1F2] mr-4" />
+                  <SocialIcon url='https://x.com/asukeai' className="text-[#0A0A0A] mr-4" target="_blank" />
                   <div>
-                    <h4 className="font-bold">Twitter</h4>
-                    <p className="text-sm text-gray-500">@festivibe</p>
+                    <h4 className="font-bold">X</h4>
+                    <p className="text-sm text-gray-500">@asukeai</p>
                   </div>
                 </a>
                 
                 <a 
-                  href="mailto:info@festivibe.com"
+                  href="https://www.tiktok.com/@asukeai"
+                  target="_blank"
                   className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <Mail size={24} className="text-gray-700 mr-4" />
+                  <SocialIcon url='https://www.tiktok.com/@asukeai' className="text-gray-700 mr-4" target="_blank" />
                   <div>
-                    <h4 className="font-bold">Email</h4>
-                    <p className="text-sm text-gray-500">info@festivibe.com</p>
+                    <h4 className="font-bold">TikTok</h4>
+                    <p className="text-sm text-gray-500">@asukeai</p>
                   </div>
                 </a>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      
-      <section className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">Connect With Us</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Follow us on social media for the latest updates on upcoming events and exclusive content.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-          <a 
-            href="https://facebook.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
-          >
-            <Facebook size={32} className="text-[#1877F2] mb-4" />
-            <h3 className="font-bold">Facebook</h3>
-            <p className="text-sm text-gray-500">@festivibe</p>
-          </a>
-          
-          <a 
-            href="https://instagram.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
-          >
-            <Instagram size={32} className="text-[#E1306C] mb-4" />
-            <h3 className="font-bold">Instagram</h3>
-            <p className="text-sm text-gray-500">@festivibe</p>
-          </a>
-          
-          <a 
-            href="https://twitter.com" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
-          >
-            <Twitter size={32} className="text-[#1DA1F2] mb-4" />
-            <h3 className="font-bold">Twitter</h3>
-            <p className="text-sm text-gray-500">@festivibe</p>
-          </a>
-          
-          <a 
-            href="mailto:info@festivibe.com"
-            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
-          >
-            <Mail size={32} className="text-gray-700 mb-4" />
-            <h3 className="font-bold">Email</h3>
-            <p className="text-sm text-gray-500">info@festivibe.com</p>
-          </a>
         </div>
       </section>
     </div>

@@ -1,123 +1,114 @@
+import React, { useState } from 'react';
+import { Send } from 'lucide-react';
+import { toast } from 'sonner';
 
-import React from 'react';
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Mail, User, MessageSquare } from 'lucide-react';
-
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/hooks/use-toast";
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
-});
-
-const ContactForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
+const ContactForm: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    
-    // Here you would typically send the form data to a backend
-    // For now, we'll just show a success message
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    
-    form.reset();
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://formspree.io/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast.success('Mensaje enviado con éxito!', {
+          description: 'Nos pondremos en contacto con usted lo antes posible.',
+        });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        toast.error('Hubo un problema al enviar el mensaje. Inténtalo de nuevo.');
+      }
+    } catch (error) {
+      toast.error('Error de conexión. Inténtalo de nuevo.');
+    }
+
+    setIsSubmitting(false);
+  };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-md">
-      <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
-      
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <div className="flex items-center border rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:border-input">
-                    <User className="ml-3 h-5 w-5 text-gray-400" />
-                    <Input placeholder="Your name" className="border-0 focus-visible:ring-0" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <div className="flex items-center border rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:border-input">
-                    <Mail className="ml-3 h-5 w-5 text-gray-400" />
-                    <Input placeholder="Your email" className="border-0 focus-visible:ring-0" {...field} />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Message</FormLabel>
-                <FormControl>
-                  <div className="flex border rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:border-input">
-                    <MessageSquare className="ml-3 mt-3 h-5 w-5 text-gray-400 flex-shrink-0" />
-                    <Textarea 
-                      placeholder="Your message" 
-                      className="border-0 focus-visible:ring-0 min-h-[120px]" 
-                      {...field} 
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          <Button type="submit" className="w-full">Send Message</Button>
-        </form>
-      </Form>
-    </div>
+    <form onSubmit={handleSubmit} className="space-y-10  bg-white p-8 rounded-lg shadow-md">
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium mb-2">
+          Nombre
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          value={formData.name}
+          onChange={handleChange}
+          className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+          placeholder="Nombre"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium mb-2">
+          Email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+          placeholder="email@ejemplo.com"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium mb-2">
+          Mensaje:
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          value={formData.message}
+          onChange={handleChange}
+          rows={5}
+          className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+          placeholder="Escriba aquí..."
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="inline-flex items-center justify-center w-full px-6 py-3 text-white bg-primary rounded-lg transition-all hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-70"
+      >
+        {isSubmitting ? (
+          <>
+            <div className="mr-2 h-4 w-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+            Enviando...
+          </>
+        ) : (
+          <>
+            Enviar mensaje
+            <Send size={16} className="ml-2" />
+          </>
+        )}
+      </button>
+    </form>
   );
 };
 

@@ -29,10 +29,10 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
           <img
             src={event.image}
             alt={event.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
           <div className="absolute top-4 left-4">
-            <span className={`tag tag-${event.tag.toLowerCase()}`}>{event.tag}</span>
+            <span className={`tag bg-primary text-primary-foreground tag-${event.tag.toLowerCase()}`}>{event.tag}</span>
           </div>
         </div>
         
@@ -45,7 +45,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
                 <span>{event.address}</span>
               </div>
               <p className="text-lg font-bold text-primary">
-                {event.price === 0 ? 'Free' : `$${typeof event.price === 'number' ? event.price.toFixed(2) : event.price}`}
+                {event.price === '0' ? 'Entrada libre y gratuita' : `${typeof event.price === 'number' ? event.price : event.price}`}
               </p>
             </DialogDescription>
           </DialogHeader>
@@ -54,7 +54,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
             <div className="flex items-center p-3 bg-secondary rounded-lg">
               <CalendarDays size={18} className="mr-2 text-primary" />
               <div>
-                <p className="text-sm text-muted-foreground">Date</p>
+                <p className="text-sm text-muted-foreground">Fecha</p>
                 <p className="font-medium">{formatDate(event.date)}</p>
               </div>
             </div>
@@ -62,14 +62,14 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
             <div className="flex items-center p-3 bg-secondary rounded-lg">
               <Clock size={18} className="mr-2 text-primary" />
               <div>
-                <p className="text-sm text-muted-foreground">Time</p>
-                <p className="font-medium">{formatTime(event.date)}</p>
+                <p className="text-sm text-muted-foreground">Horario:</p>
+                <p className="font-medium">{event.time}</p>
               </div>
             </div>
           </div>
           
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">About Event</h3>
+            <h3 className="text-lg font-semibold mb-2">Descripción</h3>
             <p className="text-gray-700">{event.description}</p>
           </div>
         </div>

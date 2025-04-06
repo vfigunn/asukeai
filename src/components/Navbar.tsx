@@ -13,16 +13,16 @@ const Navbar = () => {
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-display font-bold text-2xl text-primary">Festi<span className="text-accent">Vibe</span></span>
+          <span className="font-display font-bold text-2xl text-primary">Asu<span className="text-accent">keai</span></span>
         </Link>
         
         {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className={`text-base font-medium transition-colors ${isActive('/') ? 'text-primary' : 'text-foreground/80 hover:text-primary'}`}>
-            Events
+            Eventos
           </Link>
-          <Link to="/about" className={`text-base font-medium transition-colors ${isActive('/about') ? 'text-primary' : 'text-foreground/80 hover:text-primary'}`}>
-            About Us
+          <Link to="/nosotros" className={`text-base font-medium transition-colors ${isActive('/about') ? 'text-primary' : 'text-foreground/80 hover:text-primary'}`}>
+            Nosotros
           </Link>
         </div>
         
@@ -44,14 +44,14 @@ const Navbar = () => {
               className={`text-base font-medium py-2 ${isActive('/') ? 'text-primary' : 'text-foreground/80'}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Events
+              Eventos
             </Link>
             <Link 
-              to="/about" 
+              to="/nosotros" 
               className={`text-base font-medium py-2 ${isActive('/about') ? 'text-primary' : 'text-foreground/80'}`}
               onClick={() => setIsMenuOpen(false)}
             >
-              About Us
+              Nosotros
             </Link>
           </div>
         </div>

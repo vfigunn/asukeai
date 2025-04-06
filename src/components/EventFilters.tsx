@@ -39,7 +39,7 @@ const EventFilters: React.FC<FilterProps> = ({
         <div className="relative flex-grow">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
           <Input
-            placeholder="Search events..."
+            placeholder="Buscar..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -57,7 +57,7 @@ const EventFilters: React.FC<FilterProps> = ({
                 {selectedDate ? (
                   <span>{selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                 ) : (
-                  <span>Filter by date</span>
+                  <span>Filtrar por fecha</span>
                 )}
               </Button>
             </PopoverTrigger>
@@ -77,7 +77,7 @@ const EventFilters: React.FC<FilterProps> = ({
                     onClick={() => setSelectedDate(undefined)}
                   >
                     <X size={16} className="mr-2" />
-                    Clear date
+                    Limpiar
                   </Button>
                 </div>
               )}
@@ -94,7 +94,7 @@ const EventFilters: React.FC<FilterProps> = ({
               className="text-sm text-destructive font-medium ml-2 flex items-center"
             >
               <X size={14} className="mr-1" />
-              Clear all filters
+              Quitar filtros
             </button>
           )}
         </div>

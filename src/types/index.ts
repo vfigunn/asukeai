@@ -3,21 +3,16 @@ export interface Event {
   id: string;
   name: string;
   date: string;
+  time: string;
   address: string;
   description: string;
-  price: number;
+  price: string;
   image: string;
   tag: string;
   created_at?: string;
   updated_at?: string;
 }
 
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  isAdmin: boolean;
-}
 
 export interface ContactMessage {
   id: string;

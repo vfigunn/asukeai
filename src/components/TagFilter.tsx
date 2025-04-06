@@ -25,7 +25,7 @@ const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect })
               : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
           )}
         >
-          All Events
+          Todos
         </button>
         
         {tags.map((tag) => (

@@ -50,10 +50,10 @@ const Index = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">
-          Discover <span className="text-primary">Amazing</span> Events
+          Descubre los mejores <span className="text-primary">Eventos</span>
         </h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Find and explore the best events happening around you. From music festivals to art exhibitions, we've got you covered!
+        Encuentre y explore los mejores eventos que se celebran en <b>Asunción</b>. Desde festivales de música hasta exposiciones de arte.
         </p>
       </div>
       
@@ -99,9 +99,9 @@ const Index = () => {
         </div>
       ) : (
         <div className="text-center py-12 bg-muted rounded-lg mt-8">
-          <h3 className="text-xl font-semibold mb-2">No events found</h3>
+          <h3 className="text-xl font-semibold mb-2">No se encontraron eventos</h3>
           <p className="text-gray-600">
-            Try adjusting your search filters to find events.
+          Intente ajustar los filtros de búsqueda para encontrar eventos. 
           </p>
         </div>
       )}

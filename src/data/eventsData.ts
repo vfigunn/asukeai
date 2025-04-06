@@ -4,123 +4,47 @@ import { Event } from '@/types';
 export const eventsData: Event[] = [
   {
     id: '1',
-    name: 'Summer Music Festival',
-    date: '2024-08-15T18:00:00',
-    address: 'Central Park, New York',
-    description: 'Join us for a day of amazing live music performances featuring top artists from around the world. Food and drinks will be available for purchase.',
-    price: 49.99,
-    image: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Music'
+    name: 'OSCA | Orquesta Sinfónica de la Ciudad de Asunción',
+    date: '2025-04-10T23:00:00',
+    time: '20:00 Hs.',
+    address: 'Teatro Municipal Ignacio A. Pane',
+    description: 'La OSCA bajo la batuta del director invitado Johannes Krohn y del solista Christoph Wagner / cello ✨',
+    price: '0',
+    image: 'https://i.ibb.co/pBdKPr4d/Captura-de-pantalla-2025-03-31-075236-png.webp',
+    tag: 'Musica'
   },
   {
     id: '2',
-    name: 'Food & Wine Festival',
-    date: '2024-09-10T12:00:00',
-    address: 'Riverside Convention Center, Chicago',
-    description: 'Experience a culinary adventure with the finest food and wine pairings from top chefs and wineries.',
-    price: 75,
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Food'
+    name: 'Tribute Live Performance | Green Day',
+    date: '2025-04-26T23:00:00',
+    time: '23:00 Hs',
+    address: 'Black Mango',
+    description: 'Tributo Green Day 🤯',
+    price: 'Gs. 25.000',
+    image: 'https://i.ibb.co/8L6TbHrw/Captura-de-pantalla-2025-03-31-081537-png.webp',
+    tag: 'Musica'
   },
   {
     id: '3',
-    name: 'Art Exhibition Opening',
-    date: '2024-08-05T19:00:00',
-    address: 'Modern Art Museum, Los Angeles',
-    description: 'Be the first to see this groundbreaking exhibition featuring contemporary art from emerging artists.',
-    price: 25,
-    image: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Art'
+    name: 'Kurusu Rape',
+    date: '2025-04-11T23:00:00',
+    time: '20:00 Hs',
+    address: 'Teatro Municiapl Ignacio A. Pane',
+    description: 'El viernes 11 de abril a las 20:00 podrás ser testigo de cómo nuestras más profundas tradiciones cobran nueva vida gracias a la creatividad grandes artistas nacionales.',
+    price: '0',
+    image: 'https://i.ibb.co/Q7Y39TBH/Captura-de-pantalla-2025-03-31-081420-png.webp',
+    tag: 'Charlas'
   },
   {
     id: '4',
-    name: 'Tech Conference 2024',
-    date: '2024-10-20T09:00:00',
-    address: 'Tech Hub, San Francisco',
-    description: 'The most anticipated tech event of the year featuring keynote speakers from leading technology companies.',
-    price: 199,
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Workshop'
-  },
-  {
-    id: '5',
-    name: 'Yoga Retreat Weekend',
-    date: '2024-09-15T08:00:00',
-    address: 'Serenity Resort, Malibu',
-    description: 'Escape the city for a weekend of relaxation, meditation, and yoga led by experienced instructors.',
-    price: 350,
-    image: 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Workshop'
-  },
-  {
-    id: '6',
-    name: 'New Year\'s Eve Party',
-    date: '2024-12-31T20:00:00',
-    address: 'Grand Ballroom, Miami Beach',
-    description: 'Ring in the new year with an unforgettable celebration featuring live music, dancing, and gourmet dinner.',
-    price: 150,
-    image: 'https://images.unsplash.com/photo-1567016520496-0cb4edbb9dc5?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Party'
-  },
-  {
-    id: '7',
-    name: 'Comedy Night',
-    date: '2024-09-05T20:00:00',
-    address: 'Laugh Factory, Chicago',
-    description: 'An evening of non-stop laughter with the funniest stand-up comedians in the country.',
-    price: 35,
-    image: 'https://images.unsplash.com/photo-1527224857830-43a7acc85260?q=80&w=2071&auto=format&fit=crop',
-    tag: 'Entertainment'
-  },
-  {
-    id: '8',
-    name: 'Film Festival',
-    date: '2024-10-05T10:00:00',
-    address: 'Cinema Complex, Austin',
-    description: 'A weekend showcasing independent films from around the world with director Q&A sessions.',
-    price: 85,
-    image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2069&auto=format&fit=crop',
-    tag: 'Entertainment'
-  },
-  {
-    id: '9',
-    name: 'Marathon for Charity',
-    date: '2024-09-25T07:00:00',
-    address: 'Downtown, Boston',
-    description: 'Run for a cause! Join thousands of participants in this annual charity marathon supporting children\'s education.',
-    price: 45,
-    image: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd1?q=80&w=2074&auto=format&fit=crop',
-    tag: 'Sports'
-  },
-  {
-    id: '10',
-    name: 'Craft Beer Festival',
-    date: '2024-08-28T16:00:00',
-    address: 'Waterfront Park, Portland',
-    description: 'Sample over 100 craft beers from local and international breweries, with live music and food trucks.',
-    price: 60,
-    image: 'https://images.unsplash.com/photo-1575367439058-6096bb9cf5e2?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Food'
-  },
-  {
-    id: '11',
-    name: 'Gardening Workshop',
-    date: '2024-09-18T09:00:00',
-    address: 'Botanical Garden, Denver',
-    description: 'Learn sustainable gardening techniques from master gardeners in this hands-on workshop.',
-    price: 25,
-    image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=2088&auto=format&fit=crop',
-    tag: 'Workshop'
-  },
-  {
-    id: '12',
-    name: 'Classical Music Concert',
-    date: '2024-11-12T19:30:00',
-    address: 'Symphony Hall, Boston',
-    description: 'Experience the magnificent sounds of the city orchestra performing Beethoven and Mozart classics.',
-    price: 70,
-    image: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Music'
+    name: 'Yo, Zelda',
+    date: '2025-04-06T23:00:00',
+    time: '20:00 Hs',
+    address: 'Sala la Correa',
+    description: 'El grupo teatral Rara Avis, Escena, estrena “Yo, Zelda” de Luz Saldívar, directora y guionista de esta pieza, basada en la vida de la escritora y bailarina norteamericana, Zelda Sayre quien vivió en la década de los años 20. Fue esposa del escritor Scott Fitzgerald (El gran Gatsby), Zelda es reconocida por desafiar todos los cánones y códigos de su época para lograr su independencia como mujer y construir su propia historia como artista dentro de una sociedad que privilegiaba a las obras de arte de los hombres.',
+    price: 'Gs. 50.000',
+    image: 'https://i.ibb.co/5W9bsfdy/Captura-de-pantalla-2025-04-02-122000.webp',
+    tag: 'Teatro'
   }
 ];
 

@@ -1,7 +1,7 @@
 
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString('es-ES', {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
@@ -11,7 +11,7 @@ export const formatDate = (dateString: string): string => {
 
 export const formatTime = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleTimeString('en-US', {
+  return date.toLocaleTimeString('es-ES', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true

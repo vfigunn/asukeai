@@ -33,7 +33,7 @@ const App = () => (
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/nosotros" element={<About />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
