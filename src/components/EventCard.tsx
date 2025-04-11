@@ -17,6 +17,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
     return null;
   }
 
+
   return (
     <Card className="event-card cursor-pointer overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1" onClick={onClick}>
       <div className="aspect-[1/1] overflow-hidden relative">

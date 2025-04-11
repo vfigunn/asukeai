@@ -4,19 +4,7 @@ import { Event } from '@/types';
 
 
 
-
 export const eventsData: Event[] = [
-  {
-    id: '1',
-    name: 'OSCA | Orquesta Sinfónica de la Ciudad de Asunción',
-    date: '2025-04-10T23:00:00',
-    time: '20:00 Hs.',
-    address: 'Teatro Municipal Ignacio A. Pane',
-    description: 'La OSCA bajo la batuta del director invitado Johannes Krohn y del solista Christoph Wagner / cello ✨',
-    price: '0',
-    image: 'https://i.ibb.co/pBdKPr4d/Captura-de-pantalla-2025-03-31-075236-png.webp',
-    tag: 'Musica'
-  },
   {
     id: '2',
     name: 'Tribute Live Performance | Green Day',
@@ -25,7 +13,7 @@ export const eventsData: Event[] = [
     address: 'Black Mango',
     description: 'Tributo Green Day 🤯',
     price: 'Gs. 25.000',
-    image: 'https://i.ibb.co/8L6TbHrw/Captura-de-pantalla-2025-03-31-081537-png.webp',
+    image: 'https://asukeai.notion.site/image/attachment%3A445860e2-8a91-422a-847e-fb9f6a8fbcd5%3ACaptura_de_pantalla_2025-03-31_081537.png.png?id=1c799d04-e186-801d-af7e-e78e1af26371&table=block&spaceId=14d65858-96a7-4b89-84f5-3f5dcb1d9a22&width=2000&userId=&cache=v2',
     tag: 'Musica'
   },
   {
@@ -36,41 +24,8 @@ export const eventsData: Event[] = [
     address: 'Teatro Municiapl Ignacio A. Pane',
     description: 'El viernes 11 de abril a las 20:00 podrás ser testigo de cómo nuestras más profundas tradiciones cobran nueva vida gracias a la creatividad grandes artistas nacionales.',
     price: '0',
-    image: 'https://i.ibb.co/Q7Y39TBH/Captura-de-pantalla-2025-03-31-081420-png.webp',
+    image: 'https://asukeai.notion.site/image/attachment%3A8d84ff39-7581-47c4-8355-c08165004587%3ACaptura_de_pantalla_2025-03-31_081420.png.png?table=block&id=1c799d04-e186-8002-bbfb-fbaedc86cf5f&spaceId=14d65858-96a7-4b89-84f5-3f5dcb1d9a22&width=2000&userId=&cache=v2',
     tag: 'Charlas'
-  },
-  {
-    id: '4',
-    name: 'Yo, Zelda',
-    date: '2025-04-06T23:00:00',
-    time: '20:00 Hs',
-    address: 'Sala la Correa',
-    description: 'El grupo teatral Rara Avis, Escena, estrena “Yo, Zelda” de Luz Saldívar, directora y guionista de esta pieza, basada en la vida de la escritora y bailarina norteamericana, Zelda Sayre quien vivió en la década de los años 20. Fue esposa del escritor Scott Fitzgerald (El gran Gatsby), Zelda es reconocida por desafiar todos los cánones y códigos de su época para lograr su independencia como mujer y construir su propia historia como artista dentro de una sociedad que privilegiaba a las obras de arte de los hombres.',
-    price: 'Gs. 50.000',
-    image: 'https://i.ibb.co/5W9bsfdy/Captura-de-pantalla-2025-04-02-122000.webp',
-    tag: 'Teatro'
-  },
-  {
-    id: '5',
-    name: 'Cocina de Canciones',
-    date: '2025-04-10T23:00:00',
-    time: '19:00 Hs',
-    address: 'Teatro de las Américas del Centro Cultural Paraguayo Americano',
-    description: '🎶 Edu Schmidt (ex Árbol) te invita a participar del taller "Cocina de Canciones" en el Teatro de las Américas del CCPA. @eduschmidtoficial',
-    price: '0',
-    image: 'https://i.ibb.co/W4826SX8/Captura-de-pantalla-2025-03-31-075256-png.webp',
-    tag: 'Musica'
-  },
-  {
-    id: '6',
-    name: '#Modo_Avión',
-    date: '2025-04-06T23:00:00',
-    time: '18:00 y 20:00 Hs',
-    address: 'Teatro de las Américas del Centro Cultural Paraguayo Americano',
-    description: '#MODO_AVIÓN ✈️Una obra dirigida por Tana Schémbori',
-    price: 'Gs. 100.000',
-    image: 'https://i.ibb.co/wF1XMPSP/Captura-de-pantalla-2025-04-01-121043-png.webp',
-    tag: 'Teatro'
   },
   {
     id: '7',
@@ -109,7 +64,7 @@ export const eventsData: Event[] = [
 
 // Export a function to get all events
 export const getAllEvents = (): Event[] => {
-  return eventsData;
+    return eventsData;
 };
 
 // Function to get unique tags from events

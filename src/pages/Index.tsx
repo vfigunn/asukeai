@@ -8,6 +8,8 @@ import TagFilter from '@/components/TagFilter';
 import { getFilteredEvents, getUniqueEventTags } from '@/services/eventService';
 import { Event } from '@/types';
 import { Loader2 } from 'lucide-react';
+import { eventsData } from '@/data/eventsData';
+
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState('');
