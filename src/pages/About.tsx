@@ -29,7 +29,7 @@ const About = () => {
           </div>
           <div className="rounded-lg overflow-hidden shadow-lg">
             <img 
-              src="src\images\portada.gif" 
+              src="https://file.notion.so/f/f/14d65858-96a7-4b89-84f5-3f5dcb1d9a22/dcb5accf-92fa-4616-90c6-f3bf89647d9d/Header_Asukeai_Agenda_Cultural_Recomendada.gif?table=collection&id=9283607c-38d8-48da-baa2-b028054bdb62&spaceId=14d65858-96a7-4b89-84f5-3f5dcb1d9a22&expirationTimestamp=1744372800000&signature=lexfEVfL6AkAxVSZPfAYQ1JvEDJMnq0k518hn2UIXDM" 
 //https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop              
               alt="Event crowd" 
               className="w-full h-full object-cover"
