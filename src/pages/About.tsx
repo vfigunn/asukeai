@@ -29,7 +29,7 @@ const About = () => {
           </div>
           <div className="rounded-lg overflow-hidden shadow-lg">
             <img 
-              src="public/portada.gif" 
+              src="https://asukeai.vercel.app/portada.gif" 
 //https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop              
               alt="Event crowd" 
               className="w-full h-full object-cover"
