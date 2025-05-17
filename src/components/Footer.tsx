@@ -6,11 +6,11 @@ import { SocialIcon } from 'react-social-icons';
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-white">
+    <footer className="bg-notionbody text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-3xl font-bold mb-4">Asu<span className="text-accent">keai</span></h3>
+            <h3 className="font-norwester text-3xl font-bold mb-4">ASU<span className="text-red-500">KEAI</span></h3>
             <p className="text-white/80 mb-6">
               Su destino definitivo para descubrir los eventos y festivales más populares de Asunción.            
             </p>

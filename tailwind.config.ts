@@ -2,6 +2,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -21,9 +22,12 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        display: ['Montserrat', 'sans-serif'],
-      },
+        display: ['Montserrat','sans-serif'],
+        norwester: ['norwester']
+        },
       colors: {
+        notionbody: "#191919",
+        notioncard: "#262626",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

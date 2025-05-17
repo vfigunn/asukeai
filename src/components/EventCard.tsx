@@ -19,7 +19,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
 
 
   return (
-    <Card className="event-card cursor-pointer overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1" onClick={onClick}>
+    <Card className="bg-notioncard event-card cursor-pointer overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1" onClick={onClick}>
       <div className="aspect-[1/1] overflow-hidden relative">
         <img 
           src={event.image} 
@@ -36,9 +36,9 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
       </div>
       
       <CardContent className="p-4 flex-grow">
-        <h3 className="text-lg font-bold line-clamp-1 mb-3">{event.name}</h3>
+        <h3 className="text-lg text-white font-bold line-clamp-1 mb-3">{event.name}</h3>
         
-        <div className="space-y-2 text-muted-foreground">
+        <div className="space-y-2 text-white text-muted-foreground">
           <div className="flex items-center text-sm">
             <MapPin size={14} className="mr-2 flex-shrink-0" />
             <span className="truncate">{event.address}</span>
@@ -56,7 +56,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
         </div>
       </CardContent>
       
-      <CardFooter className="p-4 pt-4 border-t mt-auto">
+      <CardFooter className="p-4 pt-4 mt-auto">
         <p className="text-lg font-bold text-primary w-full">
           {event.price === '0' ? 'Entrada libre y gratuita' : `${event.price}`}
         </p>

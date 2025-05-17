@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+
 // Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +29,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-notionbody">
           <Navbar />
           <main className="flex-grow">
             <Routes>
