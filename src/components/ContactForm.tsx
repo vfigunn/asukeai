@@ -42,7 +42,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-10  bg-white p-8 rounded-lg shadow-md">
+    <form onSubmit={handleSubmit} className="space-y-10  bg-notionbody p-8 rounded-lg shadow-md">
       <div>
         <label htmlFor="name" className="block text-sm font-medium mb-2">
           Nombre
@@ -54,7 +54,7 @@ const ContactForm: React.FC = () => {
           required
           value={formData.name}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+          className="w-full px-4 py-3 text-black rounded-lg border border-border bg-background/100s transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
           placeholder="Nombre"
         />
       </div>
@@ -70,7 +70,7 @@ const ContactForm: React.FC = () => {
           required
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+          className="w-full px-4 py-3 text-black rounded-lg border border-border bg-background/100 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
           placeholder="email@ejemplo.com"
         />
       </div>
@@ -86,7 +86,7 @@ const ContactForm: React.FC = () => {
           value={formData.message}
           onChange={handleChange}
           rows={5}
-          className="w-full px-4 py-3 rounded-lg border border-border bg-background/50 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+          className="w-full px-4 py-3 text-black rounded-lg border border-border bg-background/100 transition-all focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
           placeholder="Escriba aquí..."
         ></textarea>
       </div>

@@ -10,25 +10,25 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <nav className="shadow-sm sticky top-0 z-50 bg-notionbody">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-display font-bold text-2xl text-primary">Asu<span className="text-accent">keai</span></span>
+          <span className="font-norwester font-bold text-2xl text-white">Asu<span className="text-red-500">keai</span></span>
         </Link>
         
         {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-8">
-          <Link to="/" className={`text-base font-medium transition-colors ${isActive('/') ? 'text-primary' : 'text-foreground/80 hover:text-primary'}`}>
+          <Link to="/" className={`font-norwester font-medium transition-colors ${isActive('/') ? 'text-primary' : 'text-white hover:text-primary'}`}>
             Eventos
           </Link>
-          <Link to="/nosotros" className={`text-base font-medium transition-colors ${isActive('/about') ? 'text-primary' : 'text-foreground/80 hover:text-primary'}`}>
+          <Link to="/nosotros" className={`font-norwester font-medium transition-colors ${isActive('/nosotros') ? 'text-primary' : 'text-white hover:text-primary'}`}>
             Nosotros
           </Link>
         </div>
         
         {/* Mobile menu button */}
         <button 
-          className="md:hidden p-2"
+          className="md:hidden p-2 text-white"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -48,7 +48,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/nosotros" 
-              className={`text-base font-medium py-2 ${isActive('/about') ? 'text-primary' : 'text-foreground/80'}`}
+              className={`text-base font-medium py-2 ${isActive('/nosotros') ? 'text-primary' : 'text-foreground/80'}`}
               onClick={() => setIsMenuOpen(false)}
             >
               Nosotros

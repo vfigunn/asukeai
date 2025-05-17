@@ -16,7 +16,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl p-0 overflow-hidden">
+      <DialogContent className="bg-notioncard max-w-3xl p-0 overflow-hidden">
         <button 
           onClick={onClose}
           className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 z-10 bg-white/80 p-1"
@@ -25,7 +25,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
           <span className="sr-only">Close</span>
         </button>
         
-        <div className="relative h-48 sm:h-64 md:h-80 w-full overflow-hidden bg-muted">
+        <div className="bg-notioncard relative h-48 sm:h-64 md:h-80 w-full overflow-hidden bg-muted">
           <img
             src={event.image}
             alt={event.name}
@@ -38,9 +38,9 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
         
         <div className="p-6">
           <DialogHeader className="mb-4">
-            <DialogTitle className="text-2xl">{event.name}</DialogTitle>
+            <DialogTitle className="text-2xl text-white">{event.name}</DialogTitle>
             <DialogDescription className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-              <div className="flex items-center text-foreground">
+              <div className="flex items-center text-foreground text-white">
                 <MapPin size={16} className="mr-1 flex-shrink-0" />
                 <span>{event.address}</span>
               </div>
@@ -69,8 +69,8 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
           </div>
           
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">Descripción</h3>
-            <p className="text-gray-700">{event.description}</p>
+            <h3 className="text-lg font-semibold mb-2 text-white">Descripción</h3>
+            <p className="text-gray-400">{event.description}</p>
           </div>
         </div>
       </DialogContent>

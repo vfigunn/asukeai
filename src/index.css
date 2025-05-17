@@ -39,6 +39,14 @@
   }
 }
 
+@font-face {
+  font-family: 'Norwester';
+  src: url('/fonts/norwester.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 @layer base {
   * {
     @apply border-border;
