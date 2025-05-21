@@ -6,37 +6,38 @@ import ContactForm from '@/components/ContactForm';
 const About = () => {
   return (
     <div>
-      <section className="container mx-auto px-4 py-16 md:py-24 text-white">
-        <div className="max-w-4xl mx-auto text-center mb-12">
+      <section className="container mx-auto px-4 py-16 md:py-24 text-white ">
+        {/* <div className="max-w-4xl mx-auto text-center mb-12">
           <h1 className="font-norwester text-3xl md:text-5xl font-bold mb-6">Acerca de <span className='text-red-500'>ASUKEAI</span></h1>
           <p className="text-xl text-gray-400">
               Publicamos eventos en nuestra agenda cultural    
           </p>
-        </div>
+        </div> */}
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
           <div>
-            <h2 className="font-norwester text-2xl md:text-3xl font-bold mb-4">Nuestra Mision</h2>
-            <p className="text-gray-400 mb-4">
+            <h2 className="font-norwester text-2xl md:text-3xl font-bold mb-4 text-center">Nuestra Mision</h2>
+            {/* <p className="text-gray-400 mb-4 text-center">
             En Asukeai nos apasiona conectar a la gente con experiencias increíbles. 
             Nuestra misión es facilitar que todo el mundo descubra y asista a los mejores eventos 
             en su zona, desde festivales de música a exposiciones de arte, ferias gastronómicas o conferencias.
             </p>
-            <p className="text-gray-400">
+            <p className="text-gray-400 text-center">
             Creemos que las experiencias unen a las personas y crean recuerdos duraderos. Por eso, 
             nos comprometemos a presentar eventos variados que atraigan a todo tipo de personas.
+            </p> */}
+            <p className="text-gray-400 text-center">
+            En Asukeai nos apasiona conectar a la gente con experiencias increíbles. Nuestra misión es facilitar que todo el mundo descubra y asista a los mejores eventos en su zona, desde festivales de música a exposiciones de arte, ferias gastronómicas o conferencias. Creemos que las experiencias unen a las personas y crean recuerdos duraderos. Por eso, nos comprometemos a presentar eventos variados que atraigan a todo tipo de personas. Reemplazar por: "En Asukeai, nos apasiona conectar a las personas con experiencias culturales únicas que inspiran, despiertan preguntas y fomentan el espíritu crítico y la ciudadanía. Nuestra misión es ser el puente que une a artistas, productores y públicos, facilitando el acceso a la rica oferta cultural de la ciudad: desde festivales de música, exposiciones de arte, teatro, danza y poesía, hasta ferias, capacitaciones, fotografía, cine y charlas inspiradoras. Creemos que estas experiencias no solo crean recuerdos imborrables, sino que también tejen lazos y construyen el alma de nuestra ciudad. ¡Explore, conéctese y viva Asunción!"
             </p>
           </div>
-          <div className="rounded-lg overflow-hidden shadow-lg">
+          {/* <div className="rounded-lg overflow-hidden shadow-lg">
             <img 
               src="https://asukeai.vercel.app/portada.gif" 
 //https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop              
               alt="Event crowd" 
               className="w-full h-full object-cover"
             />
-          </div>
-        </div>
-        
+          </div> */}
+{/*         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
           <div className="p-6 rounded-lg shadow-md bg-notioncard">
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
@@ -73,14 +74,17 @@ const About = () => {
               Nos comprometemos a apoyar a los organizadores de eventos y ayudarles a llegar a su público objetivo.            
             </p>
           </div>
-        </div>
+        </div> */}
       </section>
       <section className="rounded-lg container mx-auto px-4 py-16 bg-gray-50 text-white bg-notioncard">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="font-norwester text-2xl md:text-3xl font-bold mb-4">Contacto</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
-            ¿Tiene preguntas o comentarios? ¿Quiere presentar un evento? Póngase en contacto con nuestro equipo.
+              ¿Tiene preguntas o comentarios?
+            </p>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              Póngase en contacto con nuestro equipo.
             </p>
           </div>
           

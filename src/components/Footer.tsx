@@ -5,6 +5,8 @@ import { Facebook, Instagram, Twitter, Mail } from 'lucide-react';
 import { SocialIcon } from 'react-social-icons';
 
 const Footer = () => {
+  const whatsappMessage = 'https://api.whatsapp.com/send?phone=+595993367902&text=Hola,%20te%20quiero%20publicar%20un%20evento'
+
   return (
     <footer className="bg-notionbody text-white">
       <div className="container mx-auto px-4 py-12">
@@ -12,7 +14,7 @@ const Footer = () => {
           <div>
             <h3 className="font-norwester text-3xl font-bold mb-4">ASU<span className="text-red-500">KEAI</span></h3>
             <p className="text-white/80 mb-6">
-              Su destino definitivo para descubrir los eventos y festivales más populares de Asunción.            
+              Tu guía esencial para descubrir los eventos y festivales más vibrantes de Asunción. ¡Conecta, vive y celebra la cultura!            
             </p>
             <div className="flex space-x-4 items-end">
               <a href="https://facebook.com/asukeai" target="_blank" rel="noopener noreferrer" 
@@ -35,13 +37,16 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="text-xl font-bold mb-4">Páginas</h3>
+            {/* <h3 className="text-xl font-bold mb-4">Páginas</h3> */}
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-white/80 hover:text-accent transition-colors">Eventos</Link>
+                <Link to="/" className="text-white/80 hover:text-accent transition-colors hover:underline">Eventos</Link>
               </li>
               <li>
-                <Link to="/nosotros" className="text-white/80 hover:text-accent transition-colors">Nosotros</Link>
+                <Link to={whatsappMessage} target="_blank" className="text-red-500 hover:text-accent transition-colors hover:underline">Publicar Evento</Link>
+              </li>
+              <li>
+                <Link to="/nosotros" className="text-white/80 hover:text-accent transition-colors hover:underline">Nosotros</Link>
               </li>
             </ul>
           </div>
