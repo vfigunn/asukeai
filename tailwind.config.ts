@@ -26,7 +26,7 @@ export default {
         norwester: ['norwester']
         },
       colors: {
-        notionbody: "#191919",
+        notionbody: "#000000",
         notioncard: "#262626",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
