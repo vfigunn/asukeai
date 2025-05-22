@@ -17,6 +17,34 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
     return null;
   }
 
+  let tagColor;
+
+  switch(event.tag.toLowerCase()){
+    case 'musica': tagColor = 'bg-primary'
+      break
+    case 'charlas': tagColor = 'bg-white text-black'
+      break
+    case 'danza': tagColor = 'bg-cyan-500'
+      break
+    case 'teatro': tagColor = 'bg-orange-600'
+      break
+    case 'arte': tagColor = 'bg-blue-800'
+      break
+    case 'fotografia': tagColor = 'bg-amber-500'
+      break
+    case 'cine': tagColor = 'bg-gray-500'
+      break
+    case 'ferias': tagColor = 'bg-green-500'
+      break
+    case 'poesia': tagColor = 'bg-red-300'
+      break
+    case 'capacitacion': tagColor = 'bg-amber-800'
+      break
+    default: tagColor = 'bg-primary'
+      break
+  }
+
+
 
   return (
     <Card className="bg-notioncard event-card cursor-pointer overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1" onClick={onClick}>
@@ -31,7 +59,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
           }}
         />
         <div className="absolute top-3 right-3 ">
-          <Badge className={`tag tag-${event.tag.toLowerCase()} `}>{event.tag}</Badge>
+          <Badge className={`tag tag-${event.tag.toLowerCase()} ${tagColor}`}>{event.tag}</Badge>
         </div>
       </div>
       

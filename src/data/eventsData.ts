@@ -25,7 +25,7 @@ export const eventsData: Event[] = [
     description: 'El viernes 11 de abril a las 20:00 podrás ser testigo de cómo nuestras más profundas tradiciones cobran nueva vida gracias a la creatividad grandes artistas nacionales.',
     price: '0',
     image: 'https://asukeai.notion.site/image/attachment%3A8d84ff39-7581-47c4-8355-c08165004587%3ACaptura_de_pantalla_2025-03-31_081420.png.png?table=block&id=1c799d04-e186-8002-bbfb-fbaedc86cf5f&spaceId=14d65858-96a7-4b89-84f5-3f5dcb1d9a22&width=2000&userId=&cache=v2',
-    tag: 'Charlas'
+    tag: 'Danza'
   },
   {
     id: '7',
@@ -47,7 +47,7 @@ export const eventsData: Event[] = [
     description: 'Este sábado 12 de abril a las 20:00 hs., te esperamos para un Show Acústico en vivo muy especial con las talentosas Claudia Miranda (@claudiamirandaamarillito), artista popular y cantautora, y Elica Báez (@elicabaez), increíble arpista e intérprete.',
     price: 'Gs. 20.000',
     image: 'https://i.ibb.co/JWm5ZzwF/Captura-de-pantalla-2025-04-02-121333-png.webp',
-    tag: 'Musica'
+    tag: 'Teatro'
   },
   {
     id: '9',
@@ -58,7 +58,51 @@ export const eventsData: Event[] = [
     description: 'Analizaremos las estructuras de los realtos de grandes autores clásicos y contemporáneos para crear uno propio',
     price: 'Gs. 80.000',
     image: 'https://i.ibb.co/5xxVsBrr/Whats-App-Image-2025-04-02-at-19-59-02.webp',
-    tag: 'Capacitacion'
+    tag: 'Arte'
+  },
+  {
+    id: '19',
+    name: 'Taller de Escritura Creativa',
+    date: '2025-04-12T23:00:00',
+    time: '16:30 Hs',
+    address: 'La Cafebrería',
+    description: 'Analizaremos las estructuras de los realtos de grandes autores clásicos y contemporáneos para crear uno propio',
+    price: 'Gs. 80.000',
+    image: 'https://i.ibb.co/5xxVsBrr/Whats-App-Image-2025-04-02-at-19-59-02.webp',
+    tag: 'Fotografia'
+  },
+  {
+    id: '29',
+    name: 'Taller de Escritura Creativa',
+    date: '2025-04-12T23:00:00',
+    time: '16:30 Hs',
+    address: 'La Cafebrería',
+    description: 'Analizaremos las estructuras de los realtos de grandes autores clásicos y contemporáneos para crear uno propio',
+    price: 'Gs. 80.000',
+    image: 'https://i.ibb.co/5xxVsBrr/Whats-App-Image-2025-04-02-at-19-59-02.webp',
+    tag: 'Cine'
+  },
+  {
+    id: '17',
+    name: 'Taller de Escritura Creativa',
+    date: '2025-04-12T23:00:00',
+    time: '16:30 Hs',
+    address: 'La Cafebrería',
+    description: 'Analizaremos las estructuras de los realtos de grandes autores clásicos y contemporáneos para crear uno propio',
+    price: 'Gs. 80.000',
+    image: 'https://i.ibb.co/5xxVsBrr/Whats-App-Image-2025-04-02-at-19-59-02.webp',
+    tag: 'Ferias'
+  },
+  {
+    id: '39',
+    name: 'Taller de Escritura Creativa',
+    date: '2025-04-12T23:00:00',
+    time: '16:30 Hs',
+    address: 'La Cafebrería',
+    description: 'Analizaremos las estructuras de los realtos de grandes autores clásicos y contemporáneos para crear uno propio',
+    price: 'Gs. 80.000',
+    image: 'https://i.ibb.co/5xxVsBrr/Whats-App-Image-2025-04-02-at-19-59-02.webp',
+    tag: 'Poesia'
   }
 ];
 
