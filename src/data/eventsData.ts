@@ -103,6 +103,17 @@ export const eventsData: Event[] = [
     price: 'Gs. 80.000',
     image: 'https://i.ibb.co/5xxVsBrr/Whats-App-Image-2025-04-02-at-19-59-02.webp',
     tag: 'Poesia'
+  },
+  {
+    id: '23',
+    name: 'Taller de Escritura Creativa',
+    date: '2025-04-12T23:00:00',
+    time: '16:30 Hs',
+    address: 'La Cafebrería',
+    description: 'Analizaremos las estructuras de los realtos de grandes autores clásicos y contemporáneos para crear uno propio',
+    price: 'Gs. 80.000',
+    image: 'https://i.ibb.co/5xxVsBrr/Whats-App-Image-2025-04-02-at-19-59-02.webp',
+    tag: 'Capacitacion'
   }
 ];
 
