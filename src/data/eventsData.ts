@@ -13,7 +13,7 @@ export const eventsData: Event[] = [
     address: 'Black Mango',
     description: 'Tributo Green Day 🤯',
     price: 'Gs. 25.000',
-    image: 'public/assets/eventosImg/imagen_1.jpg',
+    image: 'assets/eventosImg/imagen_1.jpg',
     tag: 'Musica'
   },
   {
@@ -24,7 +24,7 @@ export const eventsData: Event[] = [
     address: 'Teatro Municiapl Ignacio A. Pane',
     description: 'El viernes 11 de abril a las 20:00 podrás ser testigo de cómo nuestras más profundas tradiciones cobran nueva vida gracias a la creatividad grandes artistas nacionales.',
     price: '0',
-    image: 'https://asukeai.notion.site/image/attachment%3A8d84ff39-7581-47c4-8355-c08165004587%3ACaptura_de_pantalla_2025-03-31_081420.png.png?table=block&id=1c799d04-e186-8002-bbfb-fbaedc86cf5f&spaceId=14d65858-96a7-4b89-84f5-3f5dcb1d9a22&width=2000&userId=&cache=v2',
+    image: 'public/assets/eventosImg/imagen_2.jpg',
     tag: 'Danza'
   },
   {
@@ -35,7 +35,7 @@ export const eventsData: Event[] = [
     address: 'Teatro de las Américas del Centro Cultural Paraguayo Americano',
     description: '',
     price: 'Gs. 100.000',
-    image: 'https://i.ibb.co/1tF9jnqT/Whats-App-Image-2025-03-11-at-15-14-08-jpeg.jpg',
+    image: 'assets/eventosImg/imagen_3.jpg',
     tag: 'Charlas'
   },
   {
