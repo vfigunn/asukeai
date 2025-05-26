@@ -13,7 +13,7 @@ export const eventsData: Event[] = [
     address: 'Black Mango',
     description: 'Tributo Green Day 🤯',
     price: 'Gs. 25.000',
-    image: 'https://asukeai.notion.site/image/attachment%3A445860e2-8a91-422a-847e-fb9f6a8fbcd5%3ACaptura_de_pantalla_2025-03-31_081537.png.png?id=1c799d04-e186-801d-af7e-e78e1af26371&table=block&spaceId=14d65858-96a7-4b89-84f5-3f5dcb1d9a22&width=2000&userId=&cache=v2',
+    image: 'public/assets/eventosImg/imagen_1.jpg',
     tag: 'Musica'
   },
   {
