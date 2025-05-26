@@ -13,6 +13,34 @@ interface EventModalProps {
 
 const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
   if (!event) return null;
+
+let tagColor;
+
+  switch(event.tag.toLowerCase()){
+    case 'musica': tagColor = 'bg-primary text-white'
+      break
+    case 'charlas': tagColor = 'bg-white text-black'
+      break
+    case 'danza': tagColor = 'bg-cyan-500 text-white'
+      break
+    case 'teatro': tagColor = 'bg-orange-600 text-white'
+      break
+    case 'arte': tagColor = 'bg-blue-800 text-white'
+      break
+    case 'fotografia': tagColor = 'bg-amber-500 text-white'
+      break
+    case 'cine': tagColor = 'bg-gray-500 text-white'
+      break
+    case 'ferias': tagColor = 'bg-green-500 text-white'
+      break
+    case 'poesia': tagColor = 'bg-red-300 text-white'
+      break
+    case 'capacitacion': tagColor = 'bg-amber-800 text-white'
+      break
+    default: tagColor = 'bg-primary text-white'
+      break
+  }
+
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -32,7 +60,7 @@ const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }) => {
             className="w-full h-full object-contain"
           />
           <div className="absolute top-4 left-4">
-            <span className={`tag bg-primary text-primary-foreground tag-${event.tag.toLowerCase()}`}>{event.tag}</span>
+            <span className={`tag ${tagColor} tag-${event.tag.toLowerCase()}`}>{event.tag}</span>
           </div>
         </div>
         

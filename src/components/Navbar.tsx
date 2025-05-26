@@ -14,7 +14,7 @@ const Navbar = () => {
     <nav className="shadow-sm sticky top-0 z-50 bg-notionbody">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-norwester font-bold text-2xl text-white"><a href="/"><img src="/assets/logos/header_asukeai.gif" alt="header_asukeai" className='h-20 rounded-lg' /></a></span>
+          <span className="ml-8 font-norwester font-bold text-2xl text-white"><a href="/"><img src="/assets/logos/header_asukeai.gif" alt="header_asukeai" className='h-20 rounded-lg' /></a></span>
         </Link>
         
         {/* Desktop menu */}
