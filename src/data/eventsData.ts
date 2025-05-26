@@ -70,7 +70,7 @@ export const eventsData: Event[] = [
     date: '2025-05-29T23:00:00',
     time: '22:00 Hs',
     address: 'Mil Noveciento 1900 Comedy Club',
-    description: 'El jueves 29 de mayo se viene el baby shower más jodido del condado de Hazzard en @1900elclub Me van a tratar de cañear a mí jajajjaa. Let the games begin!!!. El maestro de ceremonias será @larrywonder_ y los padrinos rosteadores @mariaamor.gonzalez.1 , @pame2nomas , @manumartin83 @juan.flan @villanomoriyano , @liciamarlene_ , @fabianelninja y @karimtiburonpy .',
+    description: 'El jueves 29 de mayo se viene el baby shower más jodido del condado de Hazzard en @1900elclub',
     price: 'Gs 30.000',
     image: 'assets/eventosImg/imagen_12.jpg',
     tag: 'Teatro'
