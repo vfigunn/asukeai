@@ -15,7 +15,38 @@ const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect })
     return null; // Don't render if there are no tags
   }
 
+// console.log(tags)
 
+// let tagColor
+
+
+// const verificarColor = ()=>{tags.map((tag)=>{
+//     switch(tag.toLowerCase()){
+//     case 'musica': tagColor = 'bg-primary'
+//       break
+//     case 'charlas': tagColor = 'bg-white text-black'
+//       break
+//     case 'danza': tagColor = 'bg-cyan-500'
+//       break
+//     case 'teatro': tagColor = 'bg-orange-600'
+//       break
+//     case 'arte': tagColor = 'bg-blue-800'
+//       break
+//     case 'fotografia': tagColor = 'bg-amber-500'
+//       break
+//     case 'cine': tagColor = 'bg-gray-500'
+//       break
+//     case 'ferias': tagColor = 'bg-green-500'
+//       break
+//     case 'poesia': tagColor = 'bg-red-300'
+//       break
+//     case 'capacitacion': tagColor = 'bg-amber-800'
+//       break
+//     default: tagColor = 'bg-primary'
+//       break
+//   }
+// })
+// }
 
 
   return (
