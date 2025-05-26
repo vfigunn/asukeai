@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -9,44 +8,28 @@ interface TagFilterProps {
 
 }
 
+  const colorMap: { [key: string]: string } = {
+    musica: 'bg-primary text-white',
+    charlas: 'bg-white text-black',
+    danza: 'bg-cyan-500 text-white',
+    teatro: 'bg-orange-600 text-white',
+    arte: 'bg-blue-800 text-white',
+    fotografia: 'bg-amber-500 text-white',
+    cine: 'bg-gray-500 text-white',
+    ferias: 'bg-green-500 text-white',
+    poesia: 'bg-red-300 text-white',
+    capacitacion: 'bg-amber-800 text-white',
+  };
+
+const getTagStyle = (tag: string, isSelected: boolean): string => {
+  const baseClass = colorMap[tag.toLowerCase()] || 'bg-secondary text-secondary-foreground';
+  return isSelected ? `${baseClass} opacity-70` : baseClass;
+};
 
 const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect }) => {
   if (!tags || tags.length === 0) {
-    return null; // Don't render if there are no tags
+    return null; 
   }
-
-// console.log(tags)
-
-// let tagColor
-
-
-// const verificarColor = ()=>{tags.map((tag)=>{
-//     switch(tag.toLowerCase()){
-//     case 'musica': tagColor = 'bg-primary'
-//       break
-//     case 'charlas': tagColor = 'bg-white text-black'
-//       break
-//     case 'danza': tagColor = 'bg-cyan-500'
-//       break
-//     case 'teatro': tagColor = 'bg-orange-600'
-//       break
-//     case 'arte': tagColor = 'bg-blue-800'
-//       break
-//     case 'fotografia': tagColor = 'bg-amber-500'
-//       break
-//     case 'cine': tagColor = 'bg-gray-500'
-//       break
-//     case 'ferias': tagColor = 'bg-green-500'
-//       break
-//     case 'poesia': tagColor = 'bg-red-300'
-//       break
-//     case 'capacitacion': tagColor = 'bg-amber-800'
-//       break
-//     default: tagColor = 'bg-primary'
-//       break
-//   }
-// })
-// }
 
 
   return (
@@ -69,10 +52,8 @@ const TagFilter: React.FC<TagFilterProps> = ({ tags, selectedTag, onTagSelect })
             key={tag}
             onClick={() => onTagSelect(tag)}
             className={cn(
-              ` px-4 py-2 rounded-full text-sm font-medium transition-all`,
-              selectedTag === tag 
-                ? `bg-primary text-primary-foreground shadow-md`
-                : `bg-secondary text-secondary-foreground hover:bg-secondary/80`
+              "px-4 py-2 rounded-full text-sm font-medium transition-all",
+              getTagStyle(tag, selectedTag === tag)
             )}
           >
             {tag}
