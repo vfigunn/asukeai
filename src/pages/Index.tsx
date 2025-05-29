@@ -52,7 +52,7 @@ const Index = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
         <h1 className="font-norwester text-3xl md:text-4xl font-bold mb-4 text-white">
-          AGENDA CULTURAL<span className="text-primary"> ASUNCENA</span>
+          AGENDA CULTURAL ASUNCENA
         </h1>
         <p className="text-white max-w-2xl mx-auto">
         Viva la vibrante escena cultural de Asunción. Descubra y explore los mejores eventos que la ciudad tiene para ofrecer: música en vivo, exposiciones de arte, teatro, danza, poesía, festivales, ferias, capacitaciones, fotografía, cine y charlas inspiradoras. Sumérjase en la creatividad y la pasión de la capital paraguaya. ¡Encuentre su próximo evento favorito!

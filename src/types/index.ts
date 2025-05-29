@@ -4,7 +4,7 @@ export interface Event {
   name: string;
   date: string;
   time: string;
-  address: string;
+  address?: string;
   description: string;
   price: string;
   image: string;

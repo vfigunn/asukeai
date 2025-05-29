@@ -6,54 +6,6 @@ import { Event } from '@/types';
 
 export const eventsData: Event[] = [
   {
-    id: '1',
-    name: 'Laboratorio Taller: Herramientas artisticas creativas',
-    date: '2025-05-27T23:00:00',
-    time: '18:00 Hs',
-    address: 'Galeria Multi Arte',
-    description: `TEMARIO:
-                    -Abstracción organica.
-                    -Abstracción figurativa botanica.
-                    -Textura y color.
-                    -Experimentacion Creativa.`,
-    price: 'Gs 450.000',
-    image: 'assets/eventosImg/imagen_2.jpg',
-    tag: 'Capacitacion'
-  },
-  {
-    id: '2',
-    name: 'Lanzamiento del libro: "Piriri Teatro"',
-    date: '2025-05-27T23:00:00',
-    time: '19:00 Hs',
-    address: 'Teatro de las Americas del Centro Cultural Paraguayo Aleman',
-    description: 'Tributo Green Day 🤯',
-    price: '0',
-    image: 'assets/eventosImg/imagen_6.jpg',
-    tag: 'Charlas'
-  },
-  {
-    id: '3',
-    name: 'Open Mic',
-    date: '2025-05-27T23:00:00',
-    time: '20:00 Hs',
-    address: 'Jazz Cube',
-    description: 'Tributo Green Day 🤯',
-    price: '0',
-    image: 'assets/eventosImg/imagen_9.jpg',
-    tag: 'Musica'
-  },
-  {
-    id: '4',
-    name: 'Un Métier Sérieux',
-    date: '2025-05-27T23:00:00',
-    time: '19:30 Hs',
-    address: 'Alianza Francesa',
-    description: '🎬 Ciclo de cine europeo 🇪🇺 | Este martes 27, no te pierdas la proyección de “Un métier sérieux” en la Alianza Francesa de Asunción, una mirada honesta y conmovedora al mundo de la docencia 💼📚',
-    price: '0',
-    image: 'assets/eventosImg/imagen_10.jpg',
-    tag: 'Cine'
-  },
-  {
     id: '5',
     name: 'Nicole Arz | Tributo a Laferte',
     date: '2025-05-28T23:00:00',
@@ -360,6 +312,112 @@ export const eventsData: Event[] = [
     price: 'Gs 80.000',
     image: 'assets/eventosImg/imagen_36.jpg',
     tag: 'Capacitacion'
+  },
+  {
+    id: '33',
+    name: 'Orphea Enamorada',
+    date: '2025-05-28T23:00:00',
+    time: '19:30 Hs',
+    address: 'Instituto Paraguayo Aleman',
+    description: '"Orphea enamorada", el el filmen alemán que forma parte del Ciclo de Cine Europeo, organizado por la @ueenparaguay. Acá te dejamos la sinopsis de la película.',
+    price: '0',
+    image: 'assets/eventosImg/imagen_3.jpg',
+    tag: 'Cine'
+  },
+  {
+    id: '34',
+    name: 'Alma Nómada',
+    date: '2025-06-03T23:00:00',
+    time: '21:00 Hs',
+    address: 'El Jardin del Jaguareté',
+    description: 'Vení como te sientas más top, liberate, viví tu momento y dejá que tu esencia fluya.',
+    price: 'Gs 35.000',
+    image: 'assets/eventosImg/almanomada.png',
+    tag: 'Teatro'
+  },
+  {
+    id: '35',
+    name: 'Bocanada artemisa la mula enas',
+    date: '2025-06-02T23:00:00',
+    time: '20:00 Hs',
+    address: 'El Jardin del Jaguareté',
+    description: '',
+    price: 'Gs 25.000',
+    image: 'assets/eventosImg/bocanada.png',
+    tag: 'Musica'
+  },
+  {
+    id: '36',
+    name: 'Bocanada artemisa la mula enas',
+    date: '2025-06-02T23:00:00',
+    time: '20:00 Hs',
+    address: 'El Jardin del Jaguareté',
+    description: '',
+    price: 'Gs 25.000',
+    image: 'assets/eventosImg/bocanada.png',
+    tag: 'Musica'
+  },
+  {
+    id: '37',
+    name: 'Ñande Rap',
+    date: '2025-05-28T23:00:00',
+    time: '20:00 Hs',
+    address: 'Black Mango',
+    description: 'Djs,shows y open mic con la bandaTenemos un Line Up cargadisimo😮 Recibimos a @ize______la , creadora de @break_a_bit, conocida por su calidad y versatilidad musical, prepara un dj set increíble para este miércoles ♥️',
+    price: 'Gs 35.000',
+    image: 'assets/eventosImg/nanderap.png',
+    tag: 'Musica'
+  },
+  {
+    id: '38',
+    name: 'Tribute Live Performance: Artic Monkeys',
+    date: '2025-05-30T23:00:00',
+    time: '23:00 Hs',
+    address: 'Black Mango',
+    description: 'El Viernes 30 de Mayo llega al Mango Tributo a la Banda británica Arctic Monkeys 🐵 les esperamos!',
+    price: 'Gs 25.000',
+    image: 'assets/eventosImg/artic.png',
+    tag: 'Musica'
+  },
+  {
+    id: '39',
+    name: 'Hilando Arte',
+    date: '2025-06-07T23:00:00',
+    time: '16:00 Hs',
+    description: 'Taller de pintura y bordado --Inscripciones al 0971355999--',
+    price: 'Gs 300.000',
+    image: 'assets/eventosImg/hilandoarte.jpg',
+    tag: 'Capacitacion'
+  },
+  {
+    id: '39',
+    name: '¿Dónde quedó la siesta?',
+    date: '2025-06-07T23:00:00',
+    time: '16:30 Hs',
+    description: 'Taller de autoedición de textos',
+    price: 'Gs 270.000',
+    image: 'assets/eventosImg/dondequedolasiesta.jpg',
+    tag: 'Capacitacion'
+  },
+  {
+    id: '40',
+    name: 'Presentación del libro: “Pequeñas historias que hacen grande la vida”',
+    date: '2025-05-29T23:00:00',
+    time: '19:00 Hs',
+    description: '',
+    price: '0',
+    image: 'assets/eventosImg/pequeniashistorias.jpg',
+    tag: 'Charlas'
+  },
+  {
+    id: '41',
+    name: 'Mengoré Eterno',
+    date: '2025-05-29T23:00:00',
+    time: '20:30 Hs',
+    description: '',
+    price: '0',
+    image: 'assets/eventosImg/mengoreeterno.jpg',
+    tag: 'Musica'
   }
 ];
 
