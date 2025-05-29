@@ -6,17 +6,6 @@ import { Event } from '@/types';
 
 export const eventsData: Event[] = [
   {
-    id: '5',
-    name: 'Nicole Arz | Tributo a Laferte',
-    date: '2025-05-28T23:00:00',
-    time: '21:30 Hs',
-    address: 'Jazz Cube',
-    description: '',
-    price: 'Gs 30.000',
-    image: 'assets/eventosImg/imagen_11.jpg',
-    tag: 'Musica'
-  },
-  {
     id: '6',
     name: 'Black Baby Roast',
     date: '2025-05-29T23:00:00',
@@ -314,17 +303,6 @@ export const eventsData: Event[] = [
     tag: 'Capacitacion'
   },
   {
-    id: '33',
-    name: 'Orphea Enamorada',
-    date: '2025-05-28T23:00:00',
-    time: '19:30 Hs',
-    address: 'Instituto Paraguayo Aleman',
-    description: '"Orphea enamorada", el el filmen alemán que forma parte del Ciclo de Cine Europeo, organizado por la @ueenparaguay. Acá te dejamos la sinopsis de la película.',
-    price: '0',
-    image: 'assets/eventosImg/imagen_3.jpg',
-    tag: 'Cine'
-  },
-  {
     id: '34',
     name: 'Alma Nómada',
     date: '2025-06-03T23:00:00',
@@ -355,17 +333,6 @@ export const eventsData: Event[] = [
     description: '',
     price: 'Gs 25.000',
     image: 'assets/eventosImg/bocanada.png',
-    tag: 'Musica'
-  },
-  {
-    id: '37',
-    name: 'Ñande Rap',
-    date: '2025-05-28T23:00:00',
-    time: '20:00 Hs',
-    address: 'Black Mango',
-    description: 'Djs,shows y open mic con la bandaTenemos un Line Up cargadisimo😮 Recibimos a @ize______la , creadora de @break_a_bit, conocida por su calidad y versatilidad musical, prepara un dj set increíble para este miércoles ♥️',
-    price: 'Gs 35.000',
-    image: 'assets/eventosImg/nanderap.png',
     tag: 'Musica'
   },
   {
