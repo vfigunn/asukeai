@@ -22,6 +22,12 @@ const Navbar = () => {
           <Link to="/" className={`font-norwester font-medium transition-colors ${isActive('/') ? 'text-primary' : 'text-white hover:text-primary'}`}>
             Eventos
           </Link>
+          <Link to="/chat" className={`font-norwester font-medium transition-colors ${isActive('/chat') ? 'text-primary' : 'text-white hover:text-primary'}`}>
+            Chat AI
+          </Link>
+          <Link to="/upload" className={`font-norwester font-medium transition-colors ${isActive('/upload') ? 'text-primary' : 'text-white hover:text-primary'}`}>
+            Agregar Evento
+          </Link>
           <Link to={whatsappMessage} target="_blank" className={`font-norwester font-medium transition-colors ${isActive('') ? 'text-white' : 'text-red-500 hover:text-white'}`}>
             Publicar Evento
           </Link>
@@ -49,6 +55,20 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Eventos
+            </Link>
+            <Link 
+              to="/chat" 
+              className={`text-base font-medium py-2 ${isActive('/chat') ? 'text-primary' : 'text-foreground/80'}`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Chat AI
+            </Link>
+            <Link 
+              to="/upload" 
+              className={`text-base font-medium py-2 ${isActive('/upload') ? 'text-primary' : 'text-foreground/80'}`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Agregar Evento
             </Link>
             <Link 
               to="/nosotros" 
