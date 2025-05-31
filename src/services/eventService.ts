@@ -3,20 +3,43 @@ import { Event } from '@/types';
 import { eventsData } from '@/data/eventsData';
 import { supabase } from '@/lib/supabase';
 
-// Function to get all events
-export const getAllEvents = async (): Promise<Event[]> => {
+// Function to get all events (including past events)
+export const getAllEvents = async (includePast: boolean = false): Promise<Event[]> => {
   try {
-    const { data, error } = await supabase
-      .from('events')
-      .select('*')
-      .order('date', { ascending: true });
+    let query = supabase.from('events').select('*');
+    
+    if (!includePast) {
+      // Get today's date in YYYY-MM-DD format
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const todayStr = today.toISOString().split('T')[0];
+      query = query.gte('date', todayStr);
+    }
+    
+    const { data, error } = await query
+      .order('date', { ascending: true })
+      .order('time', { ascending: true });
     
     if (error) throw error;
     return data || [];
   } catch (error) {
     console.error('Error fetching events:', error);
-    // Fallback to static data
-    return [...eventsData];
+    // Fallback to static data with filtering
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let events = [...eventsData];
+    if (!includePast) {
+      events = events.filter(event => new Date(event.date) >= today);
+    }
+    
+    return events.sort((a, b) => {
+      const dateCompare = new Date(a.date).getTime() - new Date(b.date).getTime();
+      if (dateCompare === 0) {
+        return a.time.localeCompare(b.time);
+      }
+      return dateCompare;
+    });
   }
 };
 
@@ -24,17 +47,35 @@ export const getAllEvents = async (): Promise<Event[]> => {
 export const getEventsByTag = async (tag: string): Promise<Event[]> => {
   if (!tag) return getAllEvents();
   try {
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+    
     const { data, error } = await supabase
       .from('events')
       .select('*')
       .eq('tag', tag)
-      .order('date', { ascending: true });
+      .gte('date', todayStr) // Only get events from today onwards
+      .order('date', { ascending: true })
+      .order('time', { ascending: true });
     
     if (error) throw error;
     return data || [];
   } catch (error) {
     console.error('Error fetching events by tag:', error);
-    return eventsData.filter(event => event.tag === tag);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    return eventsData
+      .filter(event => event.tag === tag && new Date(event.date) >= today)
+      .sort((a, b) => {
+        const dateCompare = new Date(a.date).getTime() - new Date(b.date).getTime();
+        if (dateCompare === 0) {
+          return a.time.localeCompare(b.time);
+        }
+        return dateCompare;
+      });
   }
 };
 
@@ -65,6 +106,14 @@ export const getFilteredEvents = async (
   try {
     let query = supabase.from('events').select('*');
     
+    // Always filter out past events unless a specific date is selected
+    if (!date) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const todayStr = today.toISOString().split('T')[0];
+      query = query.gte('date', todayStr);
+    }
+    
     // Filter by tag
     if (tag) {
       query = query.eq('tag', tag);
@@ -75,13 +124,15 @@ export const getFilteredEvents = async (
       query = query.or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
     }
     
-    // Filter by date
+    // Filter by specific date
     if (date) {
       const dateStr = date.toISOString().split('T')[0];
       query = query.eq('date', dateStr);
     }
     
-    const { data, error } = await query.order('date', { ascending: true });
+    const { data, error } = await query
+      .order('date', { ascending: true })
+      .order('time', { ascending: true });
     
     if (error) throw error;
     return data || [];
@@ -89,6 +140,13 @@ export const getFilteredEvents = async (
     console.error('Error fetching filtered events:', error);
     // Fallback to local filtering
     let filteredEvents = [...eventsData];
+    
+    // Filter out past events unless a specific date is selected
+    if (!date) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      filteredEvents = filteredEvents.filter(event => new Date(event.date) >= today);
+    }
     
     if (tag) {
       filteredEvents = filteredEvents.filter(event => event.tag === tag);
@@ -116,7 +174,13 @@ export const getFilteredEvents = async (
       });
     }
     
-    return filteredEvents.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    return filteredEvents.sort((a, b) => {
+      const dateCompare = new Date(a.date).getTime() - new Date(b.date).getTime();
+      if (dateCompare === 0) {
+        return a.time.localeCompare(b.time);
+      }
+      return dateCompare;
+    });
   }
 };
 

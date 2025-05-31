@@ -30,7 +30,23 @@ export class LLMService {
     events: Event[],
     provider: 'openai' | 'claude' | 'grok' = 'openai'
   ): Promise<string> {
+    // Get today's date in Paraguay timezone
+    const now = new Date();
+    const todayDate = now.toLocaleDateString('es-PY', {
+      timeZone: 'America/Asuncion',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long'
+    });
+    
+    // Also get date in YYYY-MM-DD format for comparison
+    const todayISO = now.toLocaleDateString('en-CA', { timeZone: 'America/Asuncion' });
+    
     const systemPrompt = `Eres Asukeai, un asistente amigable para ayudar a las personas a descubrir eventos, restaurantes, y actividades en Asunción, Paraguay.
+
+Fecha actual: ${todayDate} (${todayISO})
+Hora actual en Paraguay: ${now.toLocaleTimeString('es-PY', { timeZone: 'America/Asuncion', hour: '2-digit', minute: '2-digit' })}
 
 Tienes acceso a los siguientes eventos actualizados:
 ${JSON.stringify(events.slice(0, 20), null, 2)}
@@ -41,6 +57,7 @@ Instrucciones:
 - Si no tienes información sobre algo específico, sé honesto al respecto
 - Sugiere eventos relevantes basados en las preferencias del usuario
 - Mantén las respuestas concisas pero informativas
+- IMPORTANTE: Cuando el usuario pregunte por eventos "hoy", "mañana", etc., usa la fecha actual proporcionada para determinar qué eventos mostrar
 
 Usuario: ${message}`;
 
@@ -95,7 +112,7 @@ Usuario: ${message}`;
     });
 
     const content = response.content[0];
-    if (content.type === 'text') {
+    if (content && content.type === 'text') {
       return content.text;
     }
     

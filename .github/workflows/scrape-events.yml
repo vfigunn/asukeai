@@ -2,25 +2,40 @@ name: Scrape Events
 
 on:
   schedule:
-    # Run every 2 hours
-    - cron: '0 */2 * * *'
-  workflow_dispatch:  # Allow manual trigger
+    # Run daily at 3 AM Paraguay time (6 AM UTC during standard time, 5 AM UTC during DST)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allow manual triggering
+    inputs:
+      debug:
+        description: 'Run in debug mode'
+        required: false
+        default: 'false'
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
     
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('scrapers/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
     - name: Install dependencies
       run: |
         cd scrapers
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
     
     - name: Run Ticketea scraper
@@ -31,16 +46,24 @@ jobs:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
       run: |
-        cd scrapers/src/sources
-        python ticketea_scraper.py
+        cd scrapers
+        python src/sources/ticketea_scraper.py
     
-    - name: Run Tuti scraper
-      env:
-        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-        SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+    - name: Upload logs
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: scraper-logs
+        path: scrapers/logs/
+        retention-days: 7
+
+  notify:
+    needs: scrape
+    runs-on: ubuntu-latest
+    if: failure()
+    
+    steps:
+    - name: Notify failure
       run: |
-        cd scrapers/src/sources
-        python tuti_scraper.py || echo "Tuti scraper failed, continuing..."
+        echo "Scraper failed! Check the logs."
+        # Add notification logic here (email, Slack, Discord, etc.)

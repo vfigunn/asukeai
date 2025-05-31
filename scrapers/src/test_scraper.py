@@ -81,7 +81,12 @@ def test_minimal_scrape(supabase):
             print("❌ No event links found")
             return
         
-        event_url = f"https://ticketea.com.py{event_link['href']}"
+        # Fix URL - check if href already has domain
+        href = event_link['href']
+        if href.startswith('http'):
+            event_url = href
+        else:
+            event_url = f"https://ticketea.com.py{href}"
         print(f"📍 Testing with: {event_url}")
         
         # Fetch event page

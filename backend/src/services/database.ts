@@ -82,7 +82,7 @@ export class DatabaseService {
   static async getEventsForChat(): Promise<Event[]> {
     const { data, error } = await supabase
       .from('events')
-      .select('name, date, time, address, description, price, tag')
+      .select('id, name, date, time, address, description, price, tag')
       .order('date', { ascending: true })
       .limit(50);
 
