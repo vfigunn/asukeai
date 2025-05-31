@@ -14,8 +14,10 @@ import { es } from 'date-fns/locale';
 import { CalendarIcon, Upload, Image as ImageIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
+import { PasswordProtect } from '@/components/PasswordProtect';
 
 export default function UploadEvent() {
+  const [isUnlocked, setIsUnlocked] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -151,7 +153,7 @@ export default function UploadEvent() {
     }
   };
 
-  return (
+  const uploadForm = (
     <div className="min-h-screen bg-background py-12 px-4">
       <div className="container max-w-2xl">
         <Card>
@@ -341,5 +343,11 @@ export default function UploadEvent() {
         </Card>
       </div>
     </div>
+  );
+
+  return (
+    <PasswordProtect onUnlock={() => setIsUnlocked(true)}>
+      {uploadForm}
+    </PasswordProtect>
   );
 }

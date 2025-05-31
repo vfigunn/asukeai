@@ -66,26 +66,54 @@ Options to consider:
 - Cleaned up unnecessary deployment files
 - Updated deployment documentation
 
+### Critical Issues to Fix 🚨
+
+1. **Date Display Bug** ✅ COMPLETED
+   - [x] Fix events showing yesterday's date instead of today
+   - [x] Verify timezone handling (Paraguay timezone)
+   - [ ] Test date display across different times
+
+2. **Secure Upload Form** ✅ COMPLETED (V1)
+   - [x] Add password protection to /upload route (V1)
+   - [ ] Plan authentication system for V2
+   - [ ] Plan approval workflow for events (V2)
+
+3. **AI Chat Improvements** 🔄 IN PROGRESS
+   - [ ] Add markdown formatting to responses
+   - [ ] Implement multilingual support (Spanish/Guaraní/English)
+   - [ ] Make LLM provider agnostic (not tied to OpenAI)
+   - [ ] Add personality based on prompt above
+   - [ ] Include seasonal awareness
+
+4. **Security Issues** ✅ COMPLETED
+   - [x] Add all .env files to .gitignore
+   - [ ] Create .env.example files with dummy values
+   - [ ] Update deployment docs to exclude secrets
+
 ### In Progress 🔄
 - Setting up Railway deployment
 
 ### Next Steps 📋
 
-1. **Configure GitHub Secrets**
+1. **Fix Critical Issues First**
+   - [ ] Fix date display bug
+   - [ ] Secure upload form
+   - [ ] Add .env files to .gitignore
+
+2. **Configure GitHub Secrets**
    - [ ] Add SUPABASE_URL
    - [ ] Add SUPABASE_ANON_KEY
    - [ ] Add OPENAI_API_KEY
    - [ ] Add ANTHROPIC_API_KEY
    - [ ] Add GROK_API_KEY
 
-2. **Deploy to Railway**
-   - [ ] Create start-railway.js script
-   - [ ] Update package.json scripts
+3. **Deploy to Railway**
+   - [ ] Fix all critical issues first
    - [ ] Deploy with Railway CLI
    - [ ] Configure environment variables
    - [ ] Test production deployment
 
-3. **Post-Deployment**
+4. **Post-Deployment**
    - [ ] Test all features in production
    - [ ] Verify scraper GitHub Actions
    - [ ] Set up monitoring
