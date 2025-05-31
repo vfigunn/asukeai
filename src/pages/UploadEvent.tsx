@@ -119,6 +119,7 @@ export default function UploadEvent() {
       }
       
       const eventData = {
+        id: `manual_${Date.now()}`,
         ...formData,
         image: imageUrl,
         date: format(date, 'yyyy-MM-dd'),

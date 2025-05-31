@@ -22,6 +22,10 @@ export async function chatRoutes(fastify: FastifyInstance) {
       // Get recent events for context
       const events = await DatabaseService.getEventsForChat();
       
+      // Log event details for debugging
+      fastify.log.info(`Chat request - Total events fetched: ${events.length}`);
+      fastify.log.info(`Events dates: ${events.map(e => e.date).join(', ')}`);
+      
       // Generate response
       const response = await LLMService.chat(message, events, provider);
       

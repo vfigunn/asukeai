@@ -71,19 +71,22 @@ Options to consider:
 1. **Date Display Bug** ✅ COMPLETED
    - [x] Fix events showing yesterday's date instead of today
    - [x] Verify timezone handling (Paraguay timezone)
-   - [ ] Test date display across different times
+   - [x] Test date display across different times
 
 2. **Secure Upload Form** ✅ COMPLETED (V1)
    - [x] Add password protection to /upload route (V1)
+   - [x] Fix console errors during event upload
+   - [x] Fix HTML validation warnings (nested p tags)
+   - [x] Fix missing ID field causing 400 errors
    - [ ] Plan authentication system for V2
    - [ ] Plan approval workflow for events (V2)
 
-3. **AI Chat Improvements** 🔄 IN PROGRESS
-   - [ ] Add markdown formatting to responses
-   - [ ] Implement multilingual support (Spanish/Guaraní/English)
-   - [ ] Make LLM provider agnostic (not tied to OpenAI)
-   - [ ] Add personality based on prompt above
-   - [ ] Include seasonal awareness
+3. **AI Chat Improvements** ✅ COMPLETED
+   - [x] Add markdown formatting to responses
+   - [x] Implement multilingual support (Spanish/Guaraní/English)
+   - [x] Make LLM provider agnostic (backend supports OpenAI/Claude/Grok)
+   - [x] Add personality based on Paraguayan culture
+   - [x] Include seasonal awareness and date context
 
 4. **Security Issues** ✅ COMPLETED
    - [x] Add all .env files to .gitignore
@@ -95,10 +98,10 @@ Options to consider:
 
 ### Next Steps 📋
 
-1. **Fix Critical Issues First**
-   - [ ] Fix date display bug
-   - [ ] Secure upload form
-   - [ ] Add .env files to .gitignore
+1. **Fix Critical Issues First** ✅ COMPLETED
+   - [x] Fix date display bug
+   - [x] Secure upload form
+   - [x] Add .env files to .gitignore
 
 2. **Configure GitHub Secrets**
    - [ ] Add SUPABASE_URL
@@ -147,6 +150,30 @@ python src/test_scraper.py
 npm test             # Run frontend tests
 ./test_scraper_quick.sh  # Quick scraper test
 ```
+
+## V2 Features (Future Development) 🚀
+
+### 1. **Expand AI Assistant Capabilities**
+- [ ] Add restaurants data integration
+- [ ] Add places to visit/tourist attractions
+- [ ] Implement Google Places API integration
+- [ ] Create Python scraper for places data
+- [ ] Update LLM prompts to handle multiple data types
+- [ ] Add filtering by type (events/restaurants/places)
+
+### 2. **Enhanced Data Sources**
+- [ ] Integrate Google Places API for restaurants
+- [ ] Add tourist attractions database
+- [ ] Scrape TripAdvisor/Google Reviews
+- [ ] Add real-time weather integration
+- [ ] Include transportation information
+
+### 3. **Improved User Experience**
+- [ ] Add user preferences/personalization
+- [ ] Implement saved favorites
+- [ ] Add notifications for upcoming events
+- [ ] Create mobile app version
+- [ ] Add map integration for locations
 
 ## Notes
 - Keep this document updated as tasks are completed

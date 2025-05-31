@@ -115,4 +115,27 @@ export async function eventRoutes(fastify: FastifyInstance) {
       });
     }
   });
+
+  // Debug endpoint to check chat events
+  fastify.get<{ Reply: ApiResponse<{ events: Event[], count: number, todayDate: string }> }>('/events/chat-debug', async (request, reply) => {
+    try {
+      const events = await DatabaseService.getEventsForChat();
+      const today = new Date().toISOString().split('T')[0];
+      
+      reply.send({
+        success: true,
+        data: {
+          events,
+          count: events.length,
+          todayDate: today
+        },
+      });
+    } catch (error) {
+      fastify.log.error(error);
+      reply.status(500).send({
+        success: false,
+        error: 'Error fetching chat events',
+      });
+    }
+  });
 }

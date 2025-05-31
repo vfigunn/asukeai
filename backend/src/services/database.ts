@@ -78,16 +78,29 @@ export class DatabaseService {
     return data;
   }
 
-  // Get events for chat context (latest 50)
+  // Get events for chat context (future events only)
   static async getEventsForChat(): Promise<Event[]> {
+    // Get today's date in YYYY-MM-DD format
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+    
+    console.log(`[DatabaseService] Fetching events from date: ${todayStr}`);
+    
     const { data, error } = await supabase
       .from('events')
       .select('id, name, date, time, address, description, price, tag')
+      .gte('date', todayStr)  // Only get events from today onwards
       .order('date', { ascending: true })
-      .limit(50);
+      .limit(100);  // Increased limit to 100
 
     if (error) {
       throw new Error(`Database error: ${error.message}`);
+    }
+
+    console.log(`[DatabaseService] Fetched ${data?.length || 0} events`);
+    if (data && data.length > 0) {
+      console.log(`[DatabaseService] First event date: ${data[0]?.date}, Last event date: ${data[data.length - 1]?.date}`);
     }
 
     return data || [];

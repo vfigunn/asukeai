@@ -67,15 +67,15 @@ let tagColor;
         <div className="p-6">
           <DialogHeader className="mb-4">
             <DialogTitle className="text-2xl text-white">{event.name}</DialogTitle>
-            <DialogDescription className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <div className="flex items-center text-foreground text-white">
                 <MapPin size={16} className="mr-1 flex-shrink-0" />
                 <span>{event.address}</span>
               </div>
-              <p className="text-lg font-bold text-primary">
+              <span className="text-lg font-bold text-primary">
                 {event.price === '0' ? 'Entrada libre y gratuita' : `${typeof event.price === 'number' ? event.price : event.price}`}
-              </p>
-            </DialogDescription>
+              </span>
+            </div>
           </DialogHeader>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
